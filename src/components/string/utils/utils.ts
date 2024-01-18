@@ -1,14 +1,13 @@
 import { DELAY_IN_MS } from "../../../constants/delays";
 import { ElementStates } from "../../../types/element-states";
 import { IPerformance } from "../string";
+import { performDelay } from "../../../utils/utils";
 
 export const swap = async (arr: IPerformance[], fst: number, snd: number) => {
     const tmp = arr[fst];
     arr[fst] = arr[snd];
     arr[snd] = tmp;
 }
-
-export const performDelay = async (): Promise<void> => await new Promise<void>(resolve => setTimeout(resolve, DELAY_IN_MS));
 
 export const makePerform = async (arr: IPerformance[], setPerform: React.Dispatch<React.SetStateAction<IPerformance[]>>, setLoader: React.Dispatch<React.SetStateAction<boolean>>,
     setPerformed: React.Dispatch<React.SetStateAction<boolean>>) => {
@@ -22,7 +21,7 @@ export const makePerform = async (arr: IPerformance[], setPerform: React.Dispatc
             arr[left].state = ElementStates.Changing;
             arr[right].state = ElementStates.Changing;
             setPerform([...arr]);
-            await performDelay();
+            await performDelay(DELAY_IN_MS);
         };
         swap(arr, left, right);
 
