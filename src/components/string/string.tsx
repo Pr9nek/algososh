@@ -1,5 +1,4 @@
 import React from "react";
-import { nanoid } from "nanoid";
 import { useState } from "react";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Input } from "../ui/input/input";
@@ -8,6 +7,7 @@ import { Circle } from "../ui/circle/circle";
 import Styles from "./string.module.css";
 import { makePerform } from "./utils/utils";
 import { ElementStates } from "../../types/element-states";
+import { DELAY_IN_MS } from "../../constants/delays";
 
 export interface IPerformance {
   letter: string;
@@ -38,7 +38,7 @@ export const StringComponent: React.FC = () => {
     <SolutionLayout title="Строка">
       <div className={`${Styles.main}`}>
         <form onSubmit={onSubmit} className={`${Styles.form}`} >
-          <Input value={input} onChange={onChange} maxLength={inputLength} />
+          <Input onChange={onChange} maxLength={inputLength} />
           <Button text="Развернуть" type='submit' isLoader={isLoader} />
         </form>
         <span className={`${Styles.text}`}>Максимум — 11 символов</span>
