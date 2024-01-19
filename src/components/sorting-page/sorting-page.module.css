@@ -1,0 +1,25 @@
+.main {
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.radios {
+    display: flex;
+    gap: 40px;
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sortbuttons {
+    display: flex;
+    gap: 12px;
+}
+
+.array {
+    margin-top: 48px;
+    display: flex;
+}
