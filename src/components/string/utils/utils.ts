@@ -2,12 +2,7 @@ import { DELAY_IN_MS } from "../../../constants/delays";
 import { ElementStates } from "../../../types/element-states";
 import { IPerformance } from "../string";
 import { performDelay } from "../../../utils/utils";
-
-export const swap = async (arr: IPerformance[], fst: number, snd: number) => {
-    const tmp = arr[fst];
-    arr[fst] = arr[snd];
-    arr[snd] = tmp;
-}
+import { swap } from "../../../utils/utils";
 
 export const makePerform = async (arr: IPerformance[], setPerform: React.Dispatch<React.SetStateAction<IPerformance[]>>, setLoader: React.Dispatch<React.SetStateAction<boolean>>,
     setPerformed: React.Dispatch<React.SetStateAction<boolean>>) => {
