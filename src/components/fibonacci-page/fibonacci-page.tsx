@@ -11,45 +11,28 @@ import { makePerform } from "./utils/utils";
 export interface IPerformance {
   letter: string;
   index: number;
-  // state?: ElementStates;
 
 }
 
 export const FibonacciPage: React.FC = () => {
   const [input, setInput] = useState('');
   const [isLoader, setLoader] = useState(false);
-  const [isDisabled, setDisabled] = useState(false);
+  // const [isDisabled, setDisabled] = useState(false);
   const [isPerformed, setPerformed] = useState(false);
   const [perform, setPerform] = useState<number[]>([]);;
 
   const inputLength = 2;
-  const inputValue = Number(input);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPerformed(false);
     setPerform([]);
     setInput(event.target.value);
-    if (Number(input)>19) {
-      setDisabled(true);
-    }
-    setDisabled(false);
   }
-
 
   const onSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     setPerformed(true);
-
-    if (input && inputValue > 19) {
-      setDisabled(true)
-    }
-
-    if (input && inputValue <= 19) {
-      setDisabled(false)
-      makePerform(+input, setPerform, setLoader, setPerformed)
-    }
-
-    setDisabled(false)
+    makePerform(+input, setPerform, setLoader, setPerformed)
   }
 
   const arrResult = perform?.map((letter, index) => ({ letter: letter, state: ElementStates.Default, index: index }));
@@ -58,8 +41,8 @@ export const FibonacciPage: React.FC = () => {
     <SolutionLayout title="Последовательность Фибоначчи">
       <div className={`${Styles.main}`}>
         <form className={`${Styles.form}`} onSubmit={onSubmit}>
-          <Input onChange={onChange} maxLength={inputLength} max={19} />
-          <Button text="Развернуть" type='submit' isLoader={isLoader} disabled={isDisabled} />
+          <Input onChange={onChange} maxLength={inputLength} max={19} type='number' />
+          <Button text="Развернуть" type='submit' isLoader={isLoader} />
         </form>
         <span className={`${Styles.text}`}>Максимальное число — 19</span>
       </div>
