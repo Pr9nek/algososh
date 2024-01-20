@@ -11,90 +11,153 @@ import { IRandomArray } from "./utils/utils";
 import { performDelay } from "../../utils/utils";
 import { ElementStates } from "../../types/element-states";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
+import { swap } from "../../utils/utils";
 
 const makeSelectSorting = async (
   arr: IRandomArray[],
   direction: Direction.Descending | Direction.Ascending,
   setArray: React.Dispatch<React.SetStateAction<IRandomArray[]>>,
-  performDelay: Promise<void>
 ): Promise<IRandomArray[]> => {
   const len = arr.length;
-  for (let i = 0; i < len - 1; i++) { // начинаем цикл по всем элементам массива, кроме последнего
-    let minIndex = i; // сохраняем индекс текущего элемента в переменную minIndex
+  for (let i = 0; i < len - 1; i++) {
+    let minIndex = i;
     arr[minIndex].state = ElementStates.Changing;
     for (let j = i + 1; j < len; j++) { // вложенный цикл для поиска минимального элемента в оставшейся части массива
+      arr[i].state = ElementStates.Changing;
       arr[j].state = ElementStates.Changing;
-      setArray(...[arr]);
-      await performDelay
-      if (arr[j] < arr[minIndex]) { // если текущий элемент меньше минимального
-        minIndex = j; // обновляем индекс минимального элемента
+      setArray([...arr]);
+      await performDelay(SHORT_DELAY_IN_MS);
+      if (direction === Direction.Descending ? arr[j].value > arr[minIndex].value
+        : arr[j].value < arr[minIndex].value)
+      // если текущий элемент больше или меньше минимального
+      {
+        minIndex = j;
+        // обновляем индекс минимального элемента
       }
+      arr[j].state = ElementStates.Default;
+      setArray([...arr]);
     }
+    if (minIndex !== i) { // если индекс минимального элемента не равен текущему индексу
+      arr[minIndex].state = ElementStates.Modified;
+      arr[i].state = ElementStates.Default;
+      swap(arr, i, minIndex);
+    }
+    else {
+      arr[i].state = ElementStates.Modified;
+    }
+    setArray([...arr]);
+  }
+  arr[arr.length - 1].state = ElementStates.Modified;
+  return arr;
+}
+
+const makeBubbleSorting = async (
+  arr: IRandomArray[],
+  direction: Direction.Descending | Direction.Ascending,
+  setArray: React.Dispatch<React.SetStateAction<IRandomArray[]>>,
+): Promise<IRandomArray[]> => {
+
+  const len = arr.length; // сохраняем длину массива в переменную len
+
+  for (let i = 0; i < len; i++) { // начинаем цикл по всем элементам массива
+    for (let j = 0; j < len - 1 - i; j++) { // вложенный цикл для сравнения пар соседних элементов
+      arr[j].state = ElementStates.Changing;
+      arr[j + 1].state = ElementStates.Changing;
+      setArray([...arr]);
+      await performDelay(SHORT_DELAY_IN_MS);
+
+      if (
+        direction === Direction.Ascending
+          ? arr[j].value > arr[j + 1].value
+          : arr[j].value < arr[j + 1].value
+      ) { // если текущий элемент больше/меньше следующего
+        swap(arr, j, j + 1)// заменяем следующий элемент на временную переменную
+      }
+      arr[j].state = ElementStates.Default;
+    }
+    arr[arr.length - i - 1].state = ElementStates.Modified;
+    setArray([...arr]);
+  }
+  return arr; // возвращаем отсортированный массив
+}
+
+
+export const SortingPage: React.FC = () => {
+  const [isBubble, setIsbubble] = useState(false);
+  const [isLoader, setLoader] = useState(false);
+  const [array, setArray] = useState<IRandomArray[]>([]);
+
+  useEffect(() => {
+    setArray(generateRandomArray());
+  }, []);
+
+  const changeRadio = () => {
+    setIsbubble(!isBubble);
   }
 
-  export const SortingPage: React.FC = () => {
-    const [isBubble, setIsbubble] = useState(false);
-    const [isLoader, setLoader] = useState(false);
-    const [array, setArray] = useState<IRandomArray[]>([]);
+  const makeArray = () => {
+    setArray(generateRandomArray())
+  }
 
-    useEffect(() => {
-      setArray(generateRandomArray());
-    }, []);
+  const makeSort = async (direction: Direction.Descending | Direction.Ascending) => {
+    setLoader(true);
+    array.map(item => item.state = ElementStates.Default)
 
-    const changeRadio = () => {
-      setIsbubble(!isBubble);
+    if (!isBubble) {
+      setArray(await makeSelectSorting(array, direction, setArray));
     }
-
-    const makeArray = () => {
-      setArray(generateRandomArray())
-      console.log(array);
+    else {
+      setArray(await makeBubbleSorting(array, direction, setArray));
     }
+    setLoader(false);
+  }
 
-    return (
-      <SolutionLayout title="Сортировка массива">
-        <div className={`${styles.main}`}>
-          <div className={`${styles.options}`}>
-            <div className={`${styles.radios}`}>
-              <RadioInput
-                label="Выбор"
-                checked={!isBubble}
-                value="select"
-                onChange={changeRadio}
-                disabled={false}
-              />
-              <RadioInput
-                label="Пузырёк"
-                checked={isBubble}
-                value="bubble"
-                onChange={changeRadio}
-                disabled={false}
-              />
-            </div>
-            <div className={`${styles.sortbuttons}`}>
-              <Button
-                text="По возрастанию"
-                sorting={Direction.Ascending}
-
-              />
-              <Button
-                text="По возрастанию"
-                sorting={Direction.Descending}
-              />
-            </div>
-            <Button
-              text="Новый массив"
-              isLoader={isLoader}
-              onClick={makeArray}
+  return (
+    <SolutionLayout title="Сортировка массива">
+      <div className={`${styles.main}`}>
+        <div className={`${styles.options}`}>
+          <div className={`${styles.radios}`}>
+            <RadioInput
+              label="Выбор"
+              checked={!isBubble}
+              value="select"
+              onChange={changeRadio}
+              disabled={false}
+            />
+            <RadioInput
+              label="Пузырёк"
+              checked={isBubble}
+              value="bubble"
+              onChange={changeRadio}
+              disabled={false}
             />
           </div>
-          <div className={`${styles.array}`}>
-            {array.map((item, index) => {
-              return <Column key={index} index={item.value} state={item.state} />;
-            })
-
-            }
+          <div className={`${styles.sortbuttons}`}>
+            <Button
+              text="По возрастанию"
+              sorting={Direction.Ascending}
+              onClick={() => makeSort(Direction.Ascending)}
+            />
+            <Button
+              text="По убыванию"
+              sorting={Direction.Descending}
+              onClick={() => makeSort(Direction.Descending)}
+            />
           </div>
+          <Button
+            text="Новый массив"
+            isLoader={isLoader}
+            onClick={makeArray}
+          />
         </div>
-      </SolutionLayout>
-    );
-  };
+        <div className={`${styles.array}`}>
+          {array.map((item, index) => {
+            return <Column key={index} index={item.value} state={item.state} />;
+          })
+
+          }
+        </div>
+      </div>
+    </SolutionLayout>
+  );
+};
