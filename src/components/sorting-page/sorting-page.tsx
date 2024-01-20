@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import styles from "./sorting-page.module.css";
@@ -13,6 +13,10 @@ export const SortingPage: React.FC = () => {
   const [isBubble, setIsbubble] = useState(false);
   const [isLoader, setLoader] = useState(false);
   const [array, setArray] = useState<IRandomArray[]>([]);
+
+  useEffect(() => {
+    setArray(generateRandomArray());
+  },[]);
 
   const changeRadio = () => {
     setIsbubble(!isBubble);
