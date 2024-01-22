@@ -12,6 +12,7 @@
 .left_option {
     display: flex;
     gap: 12px;
+    min-width: 630px;
 }
 
 .circles {
