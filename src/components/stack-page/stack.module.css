@@ -1,0 +1,22 @@
+.main {
+    max-width: 829px;
+    margin: 0 auto;
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left_option {
+    display: flex;
+    gap: 12px;
+}
+
+.circles {
+    display: flex;
+    justify-content: center;
+    margin-top: 78px;
+    gap: 30px;
+}

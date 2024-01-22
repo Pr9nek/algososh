@@ -33,7 +33,6 @@ export const StringComponent: React.FC = () => {
     makePerform(arr, setPerform, setLoader, setPerformed);
   }
 
-
   return (
     <SolutionLayout title="Строка">
       <div className={`${Styles.main}`}>
