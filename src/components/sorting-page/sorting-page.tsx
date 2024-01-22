@@ -64,11 +64,13 @@ export const SortingPage: React.FC = () => {
               text="По возрастанию"
               sorting={Direction.Ascending}
               onClick={() => makeSort(Direction.Ascending)}
+              isLoader={isLoader}
             />
             <Button
               text="По убыванию"
               sorting={Direction.Descending}
               onClick={() => makeSort(Direction.Descending)}
+              isLoader={isLoader}
             />
           </div>
           <Button
