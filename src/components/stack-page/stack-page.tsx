@@ -8,16 +8,17 @@ import { ElementStates } from "../../types/element-states";
 import { Circle } from "../ui/circle/circle";
 import { performDelay } from "../../utils/utils";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
-import { stack } from "./class/stack";
+// import { stack } from "./class/stack";
+import { Stack } from "./class/stack";
 export interface IStackArray {
   letter: string;
   state: ElementStates;
 }
 
 export const StackPage: React.FC = () => {
+  const [stack] = useState(new Stack<IStackArray>())
   const [input, setInput] = useState('');
   const [isLoader, setLoader] = useState(false);
-  const [stackArr, setStack] = useState<IStackArray[]>([]);
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   }
@@ -29,30 +30,28 @@ export const StackPage: React.FC = () => {
 
     stack.push({ letter: input, state: ElementStates.Changing })
     setLoader(true);
-    setStack(stack.getArray());
     setInput('');
     await performDelay(SHORT_DELAY_IN_MS);
 
     stack.peak().state = ElementStates.Default;
-    setStack([...stack.getArray()]);
     setLoader(false);
 
   };
 
   const delStackElement = async () => {
+    if(stack.getSize() > 0) {
     setLoader(true);
     stack.peak().state = ElementStates.Changing;
-    setStack([...stack.getArray()]);
     await performDelay(SHORT_DELAY_IN_MS);
     stack.pop();
-    setStack([...stack.getArray()]);
     setLoader(false);
+    }
   }
 
-  const delAllStack = () => {
+  const delAllStack = async () => {
     setLoader(true);
     stack.clear();
-    setStack([...stack.getArray()]);
+    await performDelay(SHORT_DELAY_IN_MS);
     setLoader(false);
   }
 
@@ -82,11 +81,9 @@ export const StackPage: React.FC = () => {
           />
         </div>
         <div className={`${styles.circles}`}>
-          {stackArr && stackArr.map((item, index, arr) =>
-            <Circle key={index} index={index} letter={item.letter} state={item.state} head={index === arr.length - 1 ? 'top' : ''} />
-          )
-
-          }
+          {stack.getArray().map((item, index, arr) =>
+            <Circle key={index} index={index} letter={item.letter} state={item.state} head={index === stack.getSize() - 1 ? 'top' : ''} />
+          )};
         </div>
       </div>
     </SolutionLayout>
