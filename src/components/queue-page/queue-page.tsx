@@ -7,8 +7,7 @@ import { ChangeEvent, useState } from "react";
 import { ElementStates } from "../../types/element-states";
 import { Circle } from "../ui/circle/circle";
 import { performDelay } from "../../utils/utils";
-import { SHORT_DELAY_IN_MS } from "../../constants/delays";
-// import { queue } from "./class/queue";
+import { SHORT_DELAY_IN_MS, DELAY_IN_MS } from "../../constants/delays";
 import { Queue } from "./class/queue";
 
 interface IQueueArray {
@@ -39,53 +38,43 @@ export const QueuePage: React.FC = () => {
   const addQueueElement = async () => {
     if (input !== '' && queue.getTail() < 7) {
       setLoader(true);
-      
-      queue.enqueue({ letter: input, state: ElementStates.Default });
-
-      arrFromQueue[queue.getTail() - 1] = { letter: '', state: ElementStates.Changing };
-      setarrFromQueue([...arrFromQueue])
-      
       setInput('');
+      arrFromQueue[queue.getTail()] = { letter: '', state: ElementStates.Changing };
       await performDelay(SHORT_DELAY_IN_MS);
-      
+      queue.enqueue({ letter: input, state: ElementStates.Default });
       setarrFromQueue(queue.getElements())
       setLoader(false);
     };
     
   };
+console.log(arrFromQueue);
 
-
-  const delQueueElement = async () => {
-    setLoader(true);
-    queue.dequeue();
-    await performDelay(SHORT_DELAY_IN_MS);
-    // Добавьте здесь логику для визуализации удаления элемента
-    // Например, подсветка #D252E1 на короткое время
-    setLoader(false);
-  };
-
-  // Обработчик удаления элемента из очереди
+// Обработчик удаления без Эффектов
   // const delQueueElement = async () => {
   //   setLoader(true);
-
   //   queue.dequeue();
-
-  //   arrFromQueue[queue.getHead() -1] = { letter: arrFromQueue[queue.getHead() - 1]?.letter, state: ElementStates.Changing };
-  //   setarrFromQueue([...arrFromQueue])
-
   //   await performDelay(SHORT_DELAY_IN_MS);
-   
-  //   // setarrFromQueue(queue.getElements())
-
-  //   arrFromQueue[queue.getHead() - 1] = { letter: '', state: ElementStates.Default };
-  //   setarrFromQueue([...arrFromQueue]);
-
-  //   if (queue.getHead() === 7 && queue.getTail() === 7 && queue.isEmpty()) {
-  //     arrFromQueue[queue.getHead() - 1] = { letter: '', state: ElementStates.Default, head: 'head' };
-  //     setarrFromQueue([...arrFromQueue]);
-  //   };
-  //     setLoader(false);
+  //   // Добавьте здесь логику для визуализации удаления элемента
+  //   // Например, подсветка #D252E1 на короткое время
+  //   setLoader(false);
   // };
+
+  // Обработчик удаления элемента из очереди
+  const delQueueElement = async () => {
+    setLoader(true);
+    arrFromQueue[queue.getHead()] = { letter: arrFromQueue[queue.getHead() - 1]?.letter, state: ElementStates.Changing };
+    await performDelay(SHORT_DELAY_IN_MS);
+    queue.dequeue();
+    setarrFromQueue(queue.getElements())
+    setLoader(false);
+
+    // этот код должен был бы оставлять head 
+    if (queue.getHead() === 7 && queue.getTail() === 7 && queue.isEmpty()) {
+      arrFromQueue[6] = { letter: '', state: ElementStates.Default, head: 'head' };
+      setarrFromQueue([...arrFromQueue]);
+    };
+    };
+      
 
   const delAllQueue = async () => {
     setLoader(true);
@@ -122,13 +111,13 @@ export const QueuePage: React.FC = () => {
           />
         </div>
         <div className={`${styles.circles}`}>
-          {queue.getElements().map((item, index) => (
+          {arrFromQueue.map((item, index) => (
           
             <Circle
               key = {index}
               index = {index}
               letter = {item?.letter}
-              head = {(index === queue.getHead() && !queue.isEmpty() && queue.getTail() !==0 && item) || item?.head ? 'head' : ''}
+              head = {(index === queue.getHead() && !queue.isEmpty() && queue.getTail() !==0 && item) || (queue.isEmpty() && item?.head) ? 'head' : ''}
               tail = {index === queue.getTail() - 1 && !queue.isEmpty() && item ? 'tail' : ''} 
               state = {!item ? ElementStates.Default : item.state}
               />

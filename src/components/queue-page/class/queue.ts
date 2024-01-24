@@ -40,18 +40,19 @@ export class Queue<T> implements IQueue<T>{
         };
     }
 
+
     dequeue = () => {
-        // if (this.isEmpty()) {
-        //     throw new Error('No elements in the queue');
-        // }
+        if (this.isEmpty()) {
+            throw new Error('No elements in the queue');
+        }
         this.container[this.head % this.size] = null;
         this.head++
         this.length--
 
-        if (this.length === 0 && this.getTail() === 6) {
-            this.container[this.head ] = null;
-            this.length--
-        }
+        // if (this.length === 0 && this.getTail() === 7 && this.getHead() === 7) {
+        //     this.head = 6;
+        //     // this.length--
+        // }
 
     };
 
@@ -70,6 +71,3 @@ export class Queue<T> implements IQueue<T>{
         return this.container.length === 0;
     }
 }
-
-// export const queue = new Queue<IQueueArray>(7);
-
