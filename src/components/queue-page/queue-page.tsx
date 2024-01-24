@@ -9,7 +9,6 @@ import { Circle } from "../ui/circle/circle";
 import { performDelay } from "../../utils/utils";
 import { SHORT_DELAY_IN_MS, DELAY_IN_MS } from "../../constants/delays";
 import { Queue } from "./class/queue";
-
 interface IQueueArray {
   letter?: string;
   state: ElementStates;
@@ -19,15 +18,11 @@ const arr = Array.from({ length: 7 }, () => ({ letter: '', state: ElementStates.
 
 export const QueuePage: React.FC = () => {
   const [input, setInput] = useState('');
-  const [queue, setQueue] = useState(new Queue<IQueueArray>(7));
+  const [queue] = useState(new Queue<IQueueArray>(7));
   const [arrFromQueue, setarrFromQueue] = useState<(IQueueArray | null)[]>(arr);
-  // const [tail, setTail] = useState(queue.getTail());
-  // const [head, setHead] = useState(queue.getHead());
-  const [isLoader, setLoader] = useState(false);
-
-  console.log(queue);
-  // console.log(arrFromQueue);
-  // const arr = queue.getElements().map(item => ({ letter: item, state: ElementStates.Default }));
+  const [adIsLoader, setadIsLoader] = useState(false);
+  const [delIsLoader, setdelIsLoader] = useState(false);
+  const [clearLoader, setClearLoader] = useState(false);
 
   const inputLength: number = 4;
 
@@ -37,51 +32,40 @@ export const QueuePage: React.FC = () => {
 
   const addQueueElement = async () => {
     if (input !== '' && queue.getTail() < 7) {
-      setLoader(true);
+      setadIsLoader(true);
       setInput('');
       arrFromQueue[queue.getTail()] = { letter: '', state: ElementStates.Changing };
       await performDelay(SHORT_DELAY_IN_MS);
       queue.enqueue({ letter: input, state: ElementStates.Default });
       setarrFromQueue(queue.getElements())
-      setLoader(false);
+      setadIsLoader(false);
     };
-    
+
   };
-console.log(arrFromQueue);
 
-// Обработчик удаления без Эффектов
-  // const delQueueElement = async () => {
-  //   setLoader(true);
-  //   queue.dequeue();
-  //   await performDelay(SHORT_DELAY_IN_MS);
-  //   // Добавьте здесь логику для визуализации удаления элемента
-  //   // Например, подсветка #D252E1 на короткое время
-  //   setLoader(false);
-  // };
-
-  // Обработчик удаления элемента из очереди
   const delQueueElement = async () => {
-    setLoader(true);
+    setdelIsLoader(true);
     arrFromQueue[queue.getHead()] = { letter: arrFromQueue[queue.getHead() - 1]?.letter, state: ElementStates.Changing };
     await performDelay(SHORT_DELAY_IN_MS);
     queue.dequeue();
+    console.log(queue);
     setarrFromQueue(queue.getElements())
-    setLoader(false);
+    setdelIsLoader(false);
 
-    // этот код должен был бы оставлять head 
-    if (queue.getHead() === 7 && queue.getTail() === 7 && queue.isEmpty()) {
-      arrFromQueue[6] = { letter: '', state: ElementStates.Default, head: 'head' };
+    if (queue.getHead() === 7 && queue.getTail() === 7 && queue.getLength() === 0) {
+      arrFromQueue[arrFromQueue.length - 1] = { letter: '', state: ElementStates.Default, head: 'head' };
       setarrFromQueue([...arrFromQueue]);
+      console.log(arrFromQueue);
+
     };
-    };
-      
+  };
 
   const delAllQueue = async () => {
-    setLoader(true);
+    setClearLoader(true);
     queue.clear();
     setarrFromQueue(queue.getElements())
     await performDelay(SHORT_DELAY_IN_MS);
-    setLoader(false);
+    setClearLoader(false);
   };
 
   return (
@@ -92,36 +76,36 @@ console.log(arrFromQueue);
             <Input onChange={onChange} maxLength={inputLength} value={input} />
             <Button
               text="Добавить"
-              disabled={!input}
-              // isLoader={isLoader}
+              disabled={!input || delIsLoader || clearLoader}
+              isLoader={adIsLoader}
               onClick={addQueueElement}
             />
             <Button
               text="Удалить"
-              disabled={(!queue.getLength()) || queue.getHead() === 7}
-              isLoader={isLoader}
+              disabled={(!queue.getLength()) || queue.getHead() === 7 || adIsLoader || clearLoader}
+              isLoader={delIsLoader}
               onClick={delQueueElement}
             />
           </div>
           <Button
             text="Очистить"
-            disabled={queue.getHead() === 0 && queue.getTail() === 0} 
-            // isLoader={isLoader}
+            disabled={queue.getHead() === 0 && queue.getTail() === 0 || adIsLoader || delIsLoader}
+            isLoader={clearLoader}
             onClick={delAllQueue}
           />
         </div>
         <div className={`${styles.circles}`}>
           {arrFromQueue.map((item, index) => (
-          
+
             <Circle
-              key = {index}
-              index = {index}
-              letter = {item?.letter}
-              head = {(index === queue.getHead() && !queue.isEmpty() && queue.getTail() !==0 && item) || (queue.isEmpty() && item?.head) ? 'head' : ''}
-              tail = {index === queue.getTail() - 1 && !queue.isEmpty() && item ? 'tail' : ''} 
-              state = {!item ? ElementStates.Default : item.state}
-              />
-              
+              key={index}
+              index={index}
+              letter={item?.letter}
+              head={(index === queue.getHead() && !queue.isEmpty() && queue.getTail() !== 0 && item) || item?.head ? 'head' : ''}
+              tail={(index === queue.getTail() - 1 && !queue.isEmpty() && item && !item?.head) ? 'tail' : ''}
+              state={!item ? ElementStates.Default : item.state}
+            />
+
           ))}
         </div>
       </div>

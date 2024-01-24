@@ -33,13 +33,10 @@ export class Queue<T> implements IQueue<T>{
         if (this.length >= this.size) {
             throw new Error('Maximum length exceeded');
         }
-        if (this.length < this.size) {
-            this.container[this.tail % this.size] = item;
-            this.tail++
-            this.length++
-        };
+        this.container[this.tail % this.size] = item;
+        this.tail++
+        this.length++
     }
-
 
     dequeue = () => {
         if (this.isEmpty()) {
@@ -48,12 +45,6 @@ export class Queue<T> implements IQueue<T>{
         this.container[this.head % this.size] = null;
         this.head++
         this.length--
-
-        // if (this.length === 0 && this.getTail() === 7 && this.getHead() === 7) {
-        //     this.head = 6;
-        //     // this.length--
-        // }
-
     };
 
     clear = () => {
