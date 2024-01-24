@@ -8,7 +8,6 @@ import { ElementStates } from "../../types/element-states";
 import { Circle } from "../ui/circle/circle";
 import { performDelay } from "../../utils/utils";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
-// import { stack } from "./class/stack";
 import { Stack } from "./class/stack";
 export interface IStackArray {
   letter: string;
@@ -19,6 +18,7 @@ export const StackPage: React.FC = () => {
   const [stack] = useState(new Stack<IStackArray>())
   const [input, setInput] = useState('');
   const [isLoader, setLoader] = useState(false);
+  const inputLength: number = 4;
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   }
@@ -54,8 +54,6 @@ export const StackPage: React.FC = () => {
     await performDelay(SHORT_DELAY_IN_MS);
     setLoader(false);
   }
-
-  const inputLength: number = 4;
 
   return (
     <SolutionLayout title="Стек">

@@ -8,12 +8,6 @@ interface IStack<T> {
     getArray: () => T[];
     clear: () => void;
 }
-
-export interface IStackArray {
-    letter: string;
-    state: ElementStates;
-}
-
 export class Stack<T> implements IStack<T> {
     private container: T[] = [];
 
@@ -31,5 +25,3 @@ export class Stack<T> implements IStack<T> {
     getArray = () => this.container;
     clear = () => this.container = [];
 };
-
-export const stack = new Stack<IStackArray>();
