@@ -46,7 +46,7 @@ export const ListPage: React.FC = () => {
         </div>
         <span className={`${styles.text}`}>Максимум — 4 символа</span>
         <div className={`${styles.options}`}>
-          <Input extraClass={`${styles.input}`} type="number" onChange={onChangeValue} maxLength={inputLength} value={inputValue} placeholder="Введите индекс" />
+          <Input extraClass={`${styles.input}`} type="number" onChange={onChangeIndex} maxLength={inputLength} value={inputIndex} placeholder="Введите индекс" />
           <Button
             text="Добавить по индексу"
             extraClass={`${styles.buttonLow}`}
