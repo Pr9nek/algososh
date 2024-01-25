@@ -48,7 +48,6 @@ export const QueuePage: React.FC = () => {
     arrFromQueue[queue.getHead()] = { letter: arrFromQueue[queue.getHead() - 1]?.letter, state: ElementStates.Changing };
     await performDelay(SHORT_DELAY_IN_MS);
     queue.dequeue();
-    console.log(queue);
     setarrFromQueue(queue.getElements())
     setdelIsLoader(false);
 
@@ -94,6 +93,7 @@ export const QueuePage: React.FC = () => {
             onClick={delAllQueue}
           />
         </div>
+        <span className={`${styles.text}`}>Максимум — 4 символа</span>
         <div className={`${styles.circles}`}>
           {arrFromQueue.map((item, index) => (
 

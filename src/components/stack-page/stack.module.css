@@ -28,6 +28,6 @@
 .circles {
     display: flex;
     justify-content: center;
-    margin-top: 78px;
+    margin-top: 52px;
     gap: 30px;
 }
