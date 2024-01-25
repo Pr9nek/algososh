@@ -78,6 +78,7 @@ export const StackPage: React.FC = () => {
             onClick={delAllStack}
           />
         </div>
+        <span className={`${styles.text}`}>Максимум — 4 символа</span>
         <div className={`${styles.circles}`}>
           {stack.getArray().map((item, index, arr) =>
             <Circle key={index} index={index} letter={item.letter} state={item.state} head={index === stack.getSize() - 1 ? 'top' : ''} />

@@ -1,18 +1,27 @@
 .main {
-    max-width: 829px;
+    max-width: 952px;
     margin: 0 auto;
 }
 
 .options {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 12px;
 }
 
-.left_option {
-    display: flex;
-    gap: 12px;
-    min-width: 630px;
+.button {
+    width: 175px;
+    flex-shrink: 0;
+}
+
+.buttonLow {
+    width: 362px;
+    flex-grow: 1;
+}
+
+.input {
+    flex-shrink: 0;
+    width: 204px;
 }
 
 .text {
@@ -23,11 +32,5 @@
     display: flex;
     padding-left: 16px;
     margin-top: 4px;
-}
-
-.circles {
-    display: flex;
-    justify-content: center;
-    margin-top: 78px;
-    gap: 30px;
+    margin-bottom: 4px;
 }
