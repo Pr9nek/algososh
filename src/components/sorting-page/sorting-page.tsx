@@ -5,7 +5,8 @@ import styles from "./sorting-page.module.css";
 import { RadioInput } from "../ui/radio-input/radio-input";
 import { Button } from "../ui/button/button";
 import { Direction } from "../../types/direction";
-import { generateRandomArray, makeBubbleSorting, makeSelectSorting, IRandomArray } from "./utils/utils";
+import { makeBubbleSorting, makeSelectSorting } from "./utils/utils";
+import { generateRandomArray, IRandomArray } from "../../utils/utils";
 import { Column } from "../ui/column/column";
 import { ElementStates } from "../../types/element-states";
 
@@ -15,7 +16,7 @@ export const SortingPage: React.FC = () => {
   const [array, setArray] = useState<IRandomArray[]>([]);
 
   useEffect(() => {
-    setArray(generateRandomArray());
+    setArray(generateRandomArray(3, 17));
   }, []);
 
   const changeRadio = () => {
@@ -23,7 +24,7 @@ export const SortingPage: React.FC = () => {
   }
 
   const makeArray = () => {
-    setArray(generateRandomArray())
+    setArray(generateRandomArray(3, 17))
   }
 
   const makeSort = async (direction: Direction.Descending | Direction.Ascending) => {

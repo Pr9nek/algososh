@@ -4,10 +4,17 @@ import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import styles from "./list-page.module.css";
 import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
+import { IRandomArray, generateRandomArray } from "../../utils/utils";
+import { ElementStates } from "../../types/element-states";
+import { Circle } from "../ui/circle/circle";
+import { LinkedList } from "./class/list";
 
+const list = new LinkedList(generateRandomArray(1, 6));
 export const ListPage: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const [inputIndex, setInputIndex] = useState('');
+  // const [array, setArray] = useState<IRandomArray[]>([]);
+  const[arrayList, setArrayList] = useState(list);
   const inputLength: number = 4;
 
   const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
@@ -57,6 +64,20 @@ export const ListPage: React.FC = () => {
             extraClass={`${styles.buttonLow}`}
             onClick={() => { }}
           />
+        </div>
+        <div className={`${styles.circles}`}>
+          {arrayList.toArray().map((item, index) => (
+
+            <Circle
+              key={index}
+              index={index}
+              letter={`${item?.value}`}
+              // head
+              // tail
+              state={!item ? ElementStates.Default : item.state}
+            />
+
+          ))}
         </div>
       </div>
 
