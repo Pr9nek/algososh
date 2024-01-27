@@ -38,13 +38,13 @@ export class LinkedList<T> implements ILinkedList<T> {
         }
 
         else {
-            let current = this.head;
+            let cur = this.head;
 
-            while (current.next !== null) {
-                current = current.next;
+            while (cur.next !== null) {
+                cur = cur.next;
             }
 
-            current.next = node;
+            cur.next = node;
         }
         this.size++;
     }
@@ -53,7 +53,6 @@ export class LinkedList<T> implements ILinkedList<T> {
     }
     prepend(element: T) {
         const node = new LinkedListNode(element, this.head);
-
         this.head = node;
         this.size++;
     }
@@ -92,7 +91,28 @@ export class LinkedList<T> implements ILinkedList<T> {
             this.size++;
         }
     }
-    toArray(){
+    deleteByIndex(index: number): void {
+        if (index < 0 || index >= this.size) {
+            throw new Error('Invalid index');
+        }
+
+        if (index === 0) {
+            this.deleteHead();
+            return;
+        }
+
+        let current = this.head;
+
+        for (let i = 0; i < index - 1; i++) {
+            current = current!.next;
+        }
+
+        current!.next = current!.next!.next;
+
+        this.size--;
+    }
+    
+    toArray() {
         let result: (T | null)[] = [];
         let current = this.head;
 
@@ -102,5 +122,34 @@ export class LinkedList<T> implements ILinkedList<T> {
         }
         return result;
     }
+
+    deleteHead() {
+        if (this.head) {
+            this.head = this.head.next;
+            this.size--;
+        }
+    }
+
+    deleteTail() {
+        if (!this.head) {
+            return;
+        }
+        if (this.head.next === null) {
+            this.head = null;
+            this.size = 0;
+            return;
+        }
+        let cur = this.head;
+        let prev = null;
+
+        while (cur.next !== null) {
+            prev = cur;
+            cur = cur.next;
+        }
+
+        prev!.next = null;
+        this.size--;
+    }
 }
+
 
