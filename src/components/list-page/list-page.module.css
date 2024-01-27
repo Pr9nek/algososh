@@ -40,10 +40,24 @@
     justify-content: center;
     margin-top: 120px;
     gap: 16px;
+    /* position: relative; */
 }
 
 .circles__item {
     display: flex;
     align-items: center;
     gap: 16px;
+    position: relative;
+}
+
+.circles__top {
+    position: absolute;
+	top: -64px;
+	left: 12px;
+}
+
+.circles__bottom {
+    position: absolute;
+	top: 130px;
+	left: 12px;
 }

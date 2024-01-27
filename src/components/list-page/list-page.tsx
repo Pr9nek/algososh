@@ -5,15 +5,17 @@ import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import styles from "./list-page.module.css";
 import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
-import { IRandomArray, generateRandomArray } from "../../utils/utils";
+import { IRandomArray, generateRandomArray, performDelay } from "../../utils/utils";
 import { ElementStates } from "../../types/element-states";
 import { Circle } from "../ui/circle/circle";
 import { LinkedList } from "./class/list";
 import { ArrowIcon } from "../ui/icons/arrow-icon";
+import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 
 const list = new LinkedList(generateRandomArray(1, 6));
 
 export const ListPage: React.FC = () => {
+  const [addToHeadLoad, setAddToHeadLoad] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [inputIndex, setInputIndex] = useState('');
   // const [array, setArray] = useState<IRandomArray[]>([]);
@@ -32,14 +34,31 @@ export const ListPage: React.FC = () => {
   // const showHead = (index: number): string => index !== 0 ? "" : "head";
   // const showTail = (index: number): string => index !== array.length - 1 ? "" : "tail";
 
-  const addToHead = () => {
+  const addToHead = async () => {
     if (isNaN(Number(inputValue))) {
       return null;
     }
+    setAddToHeadLoad(true);
+    setInputValue('');
+
     list.prepend({
       value: +inputValue,
       state: ElementStates.Default
     })
+
+    array[0]!.small = {
+      value: inputValue,
+      type: 'top'
+    };
+    await performDelay(1000)
+
+    array[0]!.small = undefined;
+    setAddToHeadLoad(false);
+    list.toArray()[0]!.state = ElementStates.Modified;
+    setArray(list.toArray());
+    await performDelay(1000)
+
+    list.toArray()[0]!.state = ElementStates.Default;
     setArray(list.toArray());
   }
 
@@ -121,20 +140,31 @@ export const ListPage: React.FC = () => {
           />
         </div>
         <div className={`${styles.circles}`}>
-          {array.map((item, index) => (
+          {array.map((item, index, arr) => (
             <div className={`${styles.circles__item}`}>
               <Circle
                 key={nanoid()}
                 index={index}
                 letter={`${item?.value}`}
-                head={index === 0 ? 'head' : ''}
+                head={index === 0 && !addToHeadLoad ? 'head' : ''}
                 tail={index === array.length - 1 ? 'tail' : ''}
                 state={!item ? ElementStates.Default : item.state}
               />
-              {array.length - 1 !== index ?
+              {arr.length - 1 !== index ?
                 (
                   <ArrowIcon />)
                 : null}
+
+              {item?.small && (
+                <Circle
+                  extraClass={item.small.type === 'top'
+                    ? styles.circles__top
+                    : styles.circles__bottom}
+                  letter={item.small.value}
+                  isSmall={true}
+                  state={ElementStates.Changing}
+                />
+              )}
             </div>
 
           ))}
