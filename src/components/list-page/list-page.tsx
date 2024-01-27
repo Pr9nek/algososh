@@ -16,6 +16,7 @@ const list = new LinkedList(generateRandomArray(1, 6));
 
 export const ListPage: React.FC = () => {
   const [addToHeadLoad, setAddToHeadLoad] = useState(false);
+  const [addToTailLoad, setAddToTailLoad] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [inputIndex, setInputIndex] = useState('');
   // const [array, setArray] = useState<IRandomArray[]>([]);
@@ -40,36 +41,44 @@ export const ListPage: React.FC = () => {
     }
     setAddToHeadLoad(true);
     setInputValue('');
-
     list.prepend({
       value: +inputValue,
       state: ElementStates.Default
     })
-
     array[0]!.small = {
       value: inputValue,
       type: 'top'
     };
     await performDelay(1000)
-
     array[0]!.small = undefined;
     setAddToHeadLoad(false);
     list.toArray()[0]!.state = ElementStates.Modified;
     setArray(list.toArray());
     await performDelay(1000)
-
     list.toArray()[0]!.state = ElementStates.Default;
     setArray(list.toArray());
   }
 
-  const addToTail = () => {
+  const addToTail = async () => {
     if (isNaN(Number(inputValue))) {
       return null;
     }
+    setAddToTailLoad(true);
     list.append({
       value: +inputValue,
       state: ElementStates.Default
     })
+    array[array.length - 1]!.small = {
+      value: inputValue,
+      type: 'top'
+    }
+    await performDelay(1000);
+    array[array.length - 1]!.small = undefined;
+    setAddToTailLoad(false);
+    list.toArray()[list.toArray().length - 1]!.state = ElementStates.Modified;
+    setArray(list.toArray());
+    await performDelay(1000);
+    list.toArray()[list.toArray().length - 1]!.state = ElementStates.Default;
     setArray(list.toArray());
   }
 
