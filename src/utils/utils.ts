@@ -10,9 +10,15 @@ export const swap = async <T>(arr: T[], fst: number, snd: number) => {
 export interface IRandomArray {
     value: number;
     state: ElementStates;
+    small?: ISmall | undefined;
 }
 
-export const generateRandomArray = (minSize: number,maxSize: number ): IRandomArray[] => {
+interface ISmall {
+    value: string;
+    type: 'top' | 'bottom';
+}
+
+export const generateRandomArray = (minSize: number, maxSize: number): IRandomArray[] => {
     // const minSize = 3; // минимальный размер массива
     // const maxSize = 17; // максимальный размер массива
     const size = Math.floor(Math.random() * (maxSize - minSize + 1)) + minSize; // генерируем случайный размер массива от minSize до maxSize
@@ -23,5 +29,5 @@ export const generateRandomArray = (minSize: number,maxSize: number ): IRandomAr
         arr.push(randomNum); // добавляем случайное число в конец массива
     }
 
-    return arr.map((item) => ({ value: item, state: ElementStates.Default })); // возвращаем сгенерированный массив
+    return arr.map((item) => ({ value: item, state: ElementStates.Default, small: undefined })); // возвращаем сгенерированный массив
 }

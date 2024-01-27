@@ -29,11 +29,11 @@ export const ListPage: React.FC = () => {
     setInputIndex(e.target.value);
   }
 
-  const showHead = (index: number): string => index !== 0 ? "" : "head";
-  const showTail = (index: number): string => index !== array.length - 1 ? "" : "tail";
+  // const showHead = (index: number): string => index !== 0 ? "" : "head";
+  // const showTail = (index: number): string => index !== array.length - 1 ? "" : "tail";
 
   const addToHead = () => {
-    if (!Number(inputValue)) {
+    if (isNaN(Number(inputValue))) {
       return null;
     }
     list.prepend({
@@ -44,7 +44,7 @@ export const ListPage: React.FC = () => {
   }
 
   const addToTail = () => {
-    if (!Number(inputValue)) {
+    if (isNaN(Number(inputValue))) {
       return null;
     }
     list.append({
@@ -65,7 +65,7 @@ export const ListPage: React.FC = () => {
   }
 
   const addWithIndex = () => {
-    if (!Number(inputValue)) {
+    if (isNaN(Number(inputValue))) {
       return null;
     }
     list.addByIndex({
@@ -127,8 +127,8 @@ export const ListPage: React.FC = () => {
                 key={nanoid()}
                 index={index}
                 letter={`${item?.value}`}
-                head={showHead(index)}
-                tail={showTail(index)}
+                head={index === 0 ? 'head' : ''}
+                tail={index === array.length - 1 ? 'tail' : ''}
                 state={!item ? ElementStates.Default : item.state}
               />
               {array.length - 1 !== index ?
