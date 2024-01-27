@@ -8,13 +8,16 @@ import { IRandomArray, generateRandomArray } from "../../utils/utils";
 import { ElementStates } from "../../types/element-states";
 import { Circle } from "../ui/circle/circle";
 import { LinkedList } from "./class/list";
+import { ArrowIcon } from "../ui/icons/arrow-icon";
 
 const list = new LinkedList(generateRandomArray(1, 6));
+
 export const ListPage: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const [inputIndex, setInputIndex] = useState('');
   // const [array, setArray] = useState<IRandomArray[]>([]);
-  const[arrayList, setArrayList] = useState(list);
+  const [array, setArray] = useState(list.toArray());
+  const [arrayList, setArrayList] = useState(list);
   const inputLength: number = 4;
 
   const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,6 +27,9 @@ export const ListPage: React.FC = () => {
   const onChangeIndex = (e: ChangeEvent<HTMLInputElement>) => {
     setInputIndex(e.target.value);
   }
+
+  const showHead = (index: number): string => index !== 0 ? "" : "head";
+  const showTail = (index: number): string => index !== array.length - 1 ? "" : "tail";
 
   return (
     <SolutionLayout title="Связный список">
@@ -66,16 +72,21 @@ export const ListPage: React.FC = () => {
           />
         </div>
         <div className={`${styles.circles}`}>
-          {arrayList.toArray().map((item, index) => (
-
-            <Circle
-              key={index}
-              index={index}
-              letter={`${item?.value}`}
-              // head
-              // tail
-              state={!item ? ElementStates.Default : item.state}
-            />
+          {array.map((item, index) => (
+            <div className={`${styles.circles__item}`}>
+              <Circle
+                key={index}
+                index={index}
+                letter={`${item?.value}`}
+                head={showHead(index)}
+                tail={showTail(index)}
+                state={!item ? ElementStates.Default : item.state}
+              />
+              {array.length - 1 !== index ?
+                (
+                  <ArrowIcon />)
+                : null}
+            </div>
 
           ))}
         </div>
