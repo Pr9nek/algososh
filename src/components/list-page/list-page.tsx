@@ -116,7 +116,7 @@ export const ListPage: React.FC = () => {
     if (isNaN(Number(inputValue))) {
       return null;
     }
-    console.log(list.toArray());
+
     setAddWithIndexLoad(true);
     setAddWithIndexHead(true);
     setInputValue('');
@@ -126,7 +126,6 @@ export const ListPage: React.FC = () => {
       value: +inputValue,
       state: ElementStates.Default
     }, +inputIndex);
-    console.log(list.toArray());
 
     for (let i = 0; i <= +inputIndex; i++) {
       array[i]!.small = {
@@ -153,7 +152,6 @@ export const ListPage: React.FC = () => {
     })
     setArray([...array]);
     await performDelay(SHORT_DELAY_IN_MS);
-    console.log(list.toArray());
 
     setArray(list.toArray());
     await performDelay(SHORT_DELAY_IN_MS);
@@ -202,20 +200,20 @@ export const ListPage: React.FC = () => {
             text="Добавить по индексу"
             extraClass={`${styles.buttonLow}`}
             onClick={addWithIndex}
-            disabled={!inputIndex || !inputValue}
+            disabled={!inputIndex || !inputValue || (+inputIndex > list.getSize()) || (+inputIndex === list.getSize())}
           />
           <Button
             text="Удалить по индексу"
             extraClass={`${styles.buttonLow}`}
             onClick={delWithIndex}
-            disabled={!inputIndex || !inputValue}
+            disabled={!inputIndex || !inputValue || (+inputIndex > list.getSize()) || (+inputIndex === list.getSize())}
           />
         </div>
         <div className={`${styles.circles}`}>
           {array.map((item, index, arr) => (
             <div className={`${styles.circles__item}`}>
               <Circle
-                key={nanoid()}
+                key={index}
                 index={index}
                 letter={!(item!.stringvalue) ? `${item?.value}` : item?.stringvalue}
                 head={index === 0 && !addToHeadLoad && !addWithIndexHead ? 'head' : ''}
