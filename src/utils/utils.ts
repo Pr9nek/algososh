@@ -10,7 +10,8 @@ export const swap = async <T>(arr: T[], fst: number, snd: number) => {
 export interface IRandomArray {
     value: number;
     state: ElementStates;
-    small?: ISmall | undefined;
+    small?: ISmall;
+    stringvalue?: string;
 }
 
 interface ISmall {

@@ -17,11 +17,11 @@ const list = new LinkedList(generateRandomArray(1, 6));
 export const ListPage: React.FC = () => {
   const [addToHeadLoad, setAddToHeadLoad] = useState(false);
   const [addToTailLoad, setAddToTailLoad] = useState(false);
+  const [delFromHeadLoad, SetDelFromHeadLoad] = useState(false);
+  const [delFromTailLoad, SetDelFromTailLoad] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [inputIndex, setInputIndex] = useState('');
-  // const [array, setArray] = useState<IRandomArray[]>([]);
   const [array, setArray] = useState(list.toArray());
-  // const [arrayList, setArrayList] = useState(list);
   const inputLength: number = 4;
 
   const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,9 +31,6 @@ export const ListPage: React.FC = () => {
   const onChangeIndex = (e: ChangeEvent<HTMLInputElement>) => {
     setInputIndex(e.target.value);
   }
-
-  // const showHead = (index: number): string => index !== 0 ? "" : "head";
-  // const showTail = (index: number): string => index !== array.length - 1 ? "" : "tail";
 
   const addToHead = async () => {
     if (isNaN(Number(inputValue))) {
@@ -64,6 +61,7 @@ export const ListPage: React.FC = () => {
       return null;
     }
     setAddToTailLoad(true);
+    setInputValue('');
     list.append({
       value: +inputValue,
       state: ElementStates.Default
@@ -72,24 +70,44 @@ export const ListPage: React.FC = () => {
       value: inputValue,
       type: 'top'
     }
-    await performDelay(1000);
+    await performDelay(SHORT_DELAY_IN_MS);
     array[array.length - 1]!.small = undefined;
     setAddToTailLoad(false);
     list.toArray()[list.toArray().length - 1]!.state = ElementStates.Modified;
     setArray(list.toArray());
-    await performDelay(1000);
+    await performDelay(SHORT_DELAY_IN_MS);
     list.toArray()[list.toArray().length - 1]!.state = ElementStates.Default;
     setArray(list.toArray());
   }
 
-  const delHead = () => {
+  const delHead = async() => {
+    SetDelFromHeadLoad(true);
     list.deleteHead();
+    array[0]!.stringvalue = " ";
+
+    array[0]!.small = {
+      value:  String(array[0]?.value),
+      type: 'bottom'
+    };
+
+    await performDelay(SHORT_DELAY_IN_MS);
+    array[0]!.small = undefined;
     setArray(list.toArray());
+    SetDelFromHeadLoad(false);
   }
 
-  const delTail = () => {
+  const delTail = async() => {
+    SetDelFromTailLoad(true);
     list.deleteTail();
+    array[array.length - 1]!.stringvalue = " ";
+    array[array.length - 1]!.small = {
+      value:  String(array[0]?.value),
+      type: 'bottom'
+    };
+    await performDelay(SHORT_DELAY_IN_MS);
+    array[array.length - 1]!.small = undefined;
     setArray(list.toArray());
+    SetDelFromTailLoad(false);
   }
 
   const addWithIndex = () => {
@@ -117,11 +135,13 @@ export const ListPage: React.FC = () => {
             text="Добавить в head"
             extraClass={`${styles.button}`}
             onClick={addToHead}
+            disabled={!inputValue}
           />
           <Button
             text="Добавить в tail"
             extraClass={`${styles.button}`}
             onClick={addToTail}
+            disabled={!inputValue}
           />
           <Button
             text="Удалить из head"
@@ -141,11 +161,13 @@ export const ListPage: React.FC = () => {
             text="Добавить по индексу"
             extraClass={`${styles.buttonLow}`}
             onClick={addWithIndex}
+            disabled={!inputIndex || !inputValue}
           />
           <Button
             text="Удалить по индексу"
             extraClass={`${styles.buttonLow}`}
             onClick={delWithIndex}
+            disabled={!inputIndex || !inputValue}
           />
         </div>
         <div className={`${styles.circles}`}>
@@ -154,9 +176,9 @@ export const ListPage: React.FC = () => {
               <Circle
                 key={nanoid()}
                 index={index}
-                letter={`${item?.value}`}
+                letter={!(item!.stringvalue) ? `${item?.value}` : item?.stringvalue}
                 head={index === 0 && !addToHeadLoad ? 'head' : ''}
-                tail={index === array.length - 1 ? 'tail' : ''}
+                tail={index === array.length - 1 && !delFromTailLoad ? 'tail' : ''}
                 state={!item ? ElementStates.Default : item.state}
               />
               {arr.length - 1 !== index ?
