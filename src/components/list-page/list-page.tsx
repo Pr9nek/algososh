@@ -18,7 +18,9 @@ export const ListPage: React.FC = () => {
   const [addToHeadLoad, setAddToHeadLoad] = useState(false);
   const [addToTailLoad, setAddToTailLoad] = useState(false);
   const [delFromHeadLoad, SetDelFromHeadLoad] = useState(false);
+  const [addWithIndexLoad, setAddWithIndexLoad] = useState(false);
   const [delFromTailLoad, SetDelFromTailLoad] = useState(false);
+  const [addWithIndexHead, setAddWithIndexHead] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [inputIndex, setInputIndex] = useState('');
   const [array, setArray] = useState(list.toArray());
@@ -80,13 +82,13 @@ export const ListPage: React.FC = () => {
     setArray(list.toArray());
   }
 
-  const delHead = async() => {
+  const delHead = async () => {
     SetDelFromHeadLoad(true);
     list.deleteHead();
     array[0]!.stringvalue = " ";
 
     array[0]!.small = {
-      value:  String(array[0]?.value),
+      value: String(array[0]?.value),
       type: 'bottom'
     };
 
@@ -96,12 +98,12 @@ export const ListPage: React.FC = () => {
     SetDelFromHeadLoad(false);
   }
 
-  const delTail = async() => {
+  const delTail = async () => {
     SetDelFromTailLoad(true);
     list.deleteTail();
     array[array.length - 1]!.stringvalue = " ";
     array[array.length - 1]!.small = {
-      value:  String(array[0]?.value),
+      value: String(array[0]?.value),
       type: 'bottom'
     };
     await performDelay(SHORT_DELAY_IN_MS);
@@ -110,19 +112,58 @@ export const ListPage: React.FC = () => {
     SetDelFromTailLoad(false);
   }
 
-  const addWithIndex = () => {
+  const addWithIndex = async () => {
     if (isNaN(Number(inputValue))) {
       return null;
     }
+    console.log(list.toArray());
+    setAddWithIndexLoad(true);
+    setAddWithIndexHead(true);
+    setInputValue('');
+    setInputIndex('');
+
     list.addByIndex({
       value: +inputValue,
       state: ElementStates.Default
     }, +inputIndex);
+    console.log(list.toArray());
+
+    for (let i = 0; i <= +inputIndex; i++) {
+      array[i]!.small = {
+        value: inputValue,
+        type: 'top',
+      };
+      array[i]!.state = ElementStates.Changing;
+      await performDelay(SHORT_DELAY_IN_MS);
+      if (i > 0) {
+        array[i - 1]!.small = undefined;
+        setAddWithIndexHead(false);
+      }
+      setArray([...array]);
+    }
+    await performDelay(SHORT_DELAY_IN_MS);
+    array[+inputIndex]!.small = undefined;
+    array[+inputIndex]!.state = ElementStates.Default;
+    list.toArray().forEach((item) => item!.state = ElementStates.Default)
+
+    array.splice(+inputIndex, 0, {
+      value: +inputValue,
+      state: ElementStates.Modified,
+      small: undefined,
+    })
+    setArray([...array]);
+    await performDelay(SHORT_DELAY_IN_MS);
+    console.log(list.toArray());
+
     setArray(list.toArray());
+    await performDelay(SHORT_DELAY_IN_MS);
+    setAddWithIndexLoad(false);
   }
 
   const delWithIndex = () => {
     list.deleteByIndex(+inputIndex);
+    setInputValue('');
+    setInputIndex('');
     setArray(list.toArray());
   }
 
@@ -177,7 +218,7 @@ export const ListPage: React.FC = () => {
                 key={nanoid()}
                 index={index}
                 letter={!(item!.stringvalue) ? `${item?.value}` : item?.stringvalue}
-                head={index === 0 && !addToHeadLoad ? 'head' : ''}
+                head={index === 0 && !addToHeadLoad && !addWithIndexHead ? 'head' : ''}
                 tail={index === array.length - 1 && !delFromTailLoad ? 'tail' : ''}
                 state={!item ? ElementStates.Default : item.state}
               />
