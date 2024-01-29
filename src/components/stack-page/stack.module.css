@@ -1,0 +1,33 @@
+.main {
+    max-width: 829px;
+    margin: 0 auto;
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left_option {
+    display: flex;
+    gap: 12px;
+    min-width: 630px;
+}
+
+.text {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0em;
+    display: flex;
+    padding-left: 16px;
+    margin-top: 4px;
+}
+
+.circles {
+    display: flex;
+    justify-content: center;
+    margin-top: 52px;
+    gap: 30px;
+}
