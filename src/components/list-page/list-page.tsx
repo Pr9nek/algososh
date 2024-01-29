@@ -17,13 +17,13 @@ const list = new LinkedList(generateRandomArray(1, 6));
 export const ListPage: React.FC = () => {
   const [addToHeadLoad, setAddToHeadLoad] = useState(false);
   const [addToTailLoad, setAddToTailLoad] = useState(false);
-  const [delFromHeadLoad, SetDelFromHeadLoad] = useState(false);
-  const [addWithIndexLoad, setAddWithIndexLoad] = useState(false);
 
+  const [delFromHeadLoad, SetDelFromHeadLoad] = useState(false);
+  const [delFromTailLoad, SetDelFromTailLoad] = useState(false);
+
+  const [addWithIndexLoad, setAddWithIndexLoad] = useState(false);
   const [delWithIndexLoad, setDelWithIndexLoad] = useState(false);
   const [delWithIndexTail, setDelWithIndexTail] = useState(false);
-
-  const [delFromTailLoad, SetDelFromTailLoad] = useState(false);
   const [addWithIndexHead, setAddWithIndexHead] = useState(false);
 
   const [inputValue, setInputValue] = useState('');
@@ -201,23 +201,27 @@ export const ListPage: React.FC = () => {
         <div className={`${styles.options}`} >
           <Input extraClass={`${styles.input}`} onChange={onChangeValue} maxLength={inputLength} value={inputValue} placeholder="Введите значение" />
           <Button
+            isLoader={addToHeadLoad}
             text="Добавить в head"
             extraClass={`${styles.button}`}
             onClick={addToHead}
             disabled={!inputValue}
           />
           <Button
+            isLoader={addToTailLoad}
             text="Добавить в tail"
             extraClass={`${styles.button}`}
             onClick={addToTail}
             disabled={!inputValue}
           />
           <Button
+            isLoader={delFromHeadLoad}
             text="Удалить из head"
             extraClass={`${styles.button}`}
             onClick={delHead}
           />
           <Button
+            isLoader={delFromTailLoad}
             text="Удалить из tail"
             extraClass={`${styles.button}`}
             onClick={delTail}
@@ -227,12 +231,14 @@ export const ListPage: React.FC = () => {
         <div className={`${styles.options}`}>
           <Input extraClass={`${styles.input}`} type="number" onChange={onChangeIndex} maxLength={inputLength} value={inputIndex} placeholder="Введите индекс" />
           <Button
+            isLoader={addWithIndexLoad}
             text="Добавить по индексу"
             extraClass={`${styles.buttonLow}`}
             onClick={addWithIndex}
             disabled={!inputIndex || !inputValue || (+inputIndex > list.getSize()) || (+inputIndex === list.getSize())}
           />
           <Button
+            isLoader={delWithIndexLoad}
             text="Удалить по индексу"
             extraClass={`${styles.buttonLow}`}
             onClick={delWithIndex}
