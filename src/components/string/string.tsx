@@ -38,7 +38,7 @@ export const StringComponent: React.FC = () => {
       <div className={`${Styles.main}`}>
         <form onSubmit={onSubmit} className={`${Styles.form}`} >
           <Input onChange={onChange} maxLength={inputLength} />
-          <Button text="Развернуть" type='submit' isLoader={isLoader} />
+          <Button text="Развернуть" type='submit' isLoader={isLoader} disabled={!input}/>
         </form>
         <span className={`${Styles.text}`}>Максимум — 11 символов</span>
       </div>

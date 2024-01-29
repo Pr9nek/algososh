@@ -5,17 +5,20 @@ import styles from "./sorting-page.module.css";
 import { RadioInput } from "../ui/radio-input/radio-input";
 import { Button } from "../ui/button/button";
 import { Direction } from "../../types/direction";
-import { generateRandomArray, makeBubbleSorting, makeSelectSorting, IRandomArray } from "./utils/utils";
+import { makeBubbleSorting, makeSelectSorting } from "./utils/utils";
+import { generateRandomArray, IRandomArray } from "../../utils/utils";
 import { Column } from "../ui/column/column";
 import { ElementStates } from "../../types/element-states";
 
 export const SortingPage: React.FC = () => {
   const [isBubble, setIsbubble] = useState(false);
-  const [isLoader, setLoader] = useState(false);
+  const [isLoaderDes, setLoaderDes] = useState(false);
+  const [isLoaderAs, setLoaderAs] = useState(false);
+  const [isLoaderNewAr, setIsLoaderNewAr] = useState(false)
   const [array, setArray] = useState<IRandomArray[]>([]);
 
   useEffect(() => {
-    setArray(generateRandomArray());
+    setArray(generateRandomArray(3, 17));
   }, []);
 
   const changeRadio = () => {
@@ -23,11 +26,14 @@ export const SortingPage: React.FC = () => {
   }
 
   const makeArray = () => {
-    setArray(generateRandomArray())
+    setIsLoaderNewAr(true)
+    setArray(generateRandomArray(3, 17))
+    setIsLoaderNewAr(false)
   }
 
-  const makeSort = async (direction: Direction.Descending | Direction.Ascending) => {
-    setLoader(true);
+  const makeSortAs = async (direction: Direction.Ascending) => {
+    setLoaderAs(true);
+
     array.map(item => item.state = ElementStates.Default)
 
     if (!isBubble) {
@@ -36,7 +42,21 @@ export const SortingPage: React.FC = () => {
     else {
       setArray(await makeBubbleSorting(array, direction, setArray));
     }
-    setLoader(false);
+    setLoaderAs(false);
+  }
+
+  const makeSortDes = async (direction: Direction.Descending) => {
+    setLoaderDes(true);
+
+    array.map(item => item.state = ElementStates.Default)
+
+    if (!isBubble) {
+      setArray(await makeSelectSorting(array, direction, setArray));
+    }
+    else {
+      setArray(await makeBubbleSorting(array, direction, setArray));
+    }
+    setLoaderDes(false);
   }
 
   return (
@@ -49,34 +69,37 @@ export const SortingPage: React.FC = () => {
               checked={!isBubble}
               value="select"
               onChange={changeRadio}
-              disabled={false}
+              disabled={isLoaderAs || isLoaderDes || isLoaderNewAr}
             />
             <RadioInput
               label="Пузырёк"
               checked={isBubble}
               value="bubble"
               onChange={changeRadio}
-              disabled={false}
+              disabled={isLoaderAs || isLoaderDes || isLoaderNewAr}
             />
           </div>
           <div className={`${styles.sortbuttons}`}>
             <Button
               text="По возрастанию"
               sorting={Direction.Ascending}
-              onClick={() => makeSort(Direction.Ascending)}
-              isLoader={isLoader}
+              onClick={() => makeSortAs(Direction.Ascending)}
+              isLoader={isLoaderAs}
+              disabled={isLoaderDes || isLoaderNewAr}
             />
             <Button
               text="По убыванию"
               sorting={Direction.Descending}
-              onClick={() => makeSort(Direction.Descending)}
-              isLoader={isLoader}
+              onClick={() => makeSortDes(Direction.Descending)}
+              isLoader={isLoaderDes}
+              disabled={isLoaderAs || isLoaderNewAr}
             />
           </div>
           <Button
             text="Новый массив"
-            isLoader={isLoader}
+            isLoader={isLoaderNewAr}
             onClick={makeArray}
+            disabled={isLoaderAs || isLoaderDes}
           />
         </div>
         <div className={`${styles.array}`}>
