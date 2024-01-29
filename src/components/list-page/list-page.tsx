@@ -1,11 +1,10 @@
 import React from "react";
-import { nanoid } from "nanoid";
 import { useState, ChangeEvent } from "react";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import styles from "./list-page.module.css";
 import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
-import { IRandomArray, generateRandomArray, performDelay } from "../../utils/utils";
+import { generateRandomArray, performDelay } from "../../utils/utils";
 import { ElementStates } from "../../types/element-states";
 import { Circle } from "../ui/circle/circle";
 import { LinkedList } from "./class/list";
