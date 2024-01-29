@@ -19,8 +19,13 @@ export const ListPage: React.FC = () => {
   const [addToTailLoad, setAddToTailLoad] = useState(false);
   const [delFromHeadLoad, SetDelFromHeadLoad] = useState(false);
   const [addWithIndexLoad, setAddWithIndexLoad] = useState(false);
+
+  const [delWithIndexLoad, setDelWithIndexLoad] = useState(false);
+  const [delWithIndexTail, setDelWithIndexTail] = useState(false);
+
   const [delFromTailLoad, SetDelFromTailLoad] = useState(false);
   const [addWithIndexHead, setAddWithIndexHead] = useState(false);
+
   const [inputValue, setInputValue] = useState('');
   const [inputIndex, setInputIndex] = useState('');
   const [array, setArray] = useState(list.toArray());
@@ -158,11 +163,36 @@ export const ListPage: React.FC = () => {
     setAddWithIndexLoad(false);
   }
 
-  const delWithIndex = () => {
-    list.deleteByIndex(+inputIndex);
+  const delWithIndex = async() => {
+    setDelWithIndexLoad(true);
     setInputValue('');
     setInputIndex('');
+
+    list.deleteByIndex(+inputIndex);
+    for (let i = 0; i <= +inputIndex; i++) {
+      array[i]!.state = ElementStates.Changing;
+      setArray([...array]);
+      await performDelay(SHORT_DELAY_IN_MS);
+    }
+    if (+inputIndex === array.length - 1) {
+      setDelWithIndexTail(true);
+    }
+
+    list.toArray().forEach((item) => item!.state = ElementStates.Default);
+    
+    array[+inputIndex]!.stringvalue = " ";
+    array[+inputIndex]!.state = ElementStates.Default;
+    array[+inputIndex]!.small = {
+      value: `${array[+inputIndex]!.value}`,
+      type: "bottom"
+    }
+    setArray([...array]);
+    await performDelay(SHORT_DELAY_IN_MS);
+    
+    console.log(list.toArray());
     setArray(list.toArray());
+    setDelWithIndexTail(false);
+    setDelWithIndexLoad(false);
   }
 
   return (
@@ -206,7 +236,7 @@ export const ListPage: React.FC = () => {
             text="Удалить по индексу"
             extraClass={`${styles.buttonLow}`}
             onClick={delWithIndex}
-            disabled={!inputIndex || !inputValue || (+inputIndex > list.getSize()) || (+inputIndex === list.getSize())}
+            disabled={!inputIndex || (+inputIndex > list.getSize()) || (+inputIndex === list.getSize())}
           />
         </div>
         <div className={`${styles.circles}`}>
@@ -217,7 +247,7 @@ export const ListPage: React.FC = () => {
                 index={index}
                 letter={!(item!.stringvalue) ? `${item?.value}` : item?.stringvalue}
                 head={index === 0 && !addToHeadLoad && !addWithIndexHead ? 'head' : ''}
-                tail={index === array.length - 1 && !delFromTailLoad ? 'tail' : ''}
+                tail={index === array.length - 1 && !delFromTailLoad  && !delWithIndexTail ? 'tail' : ''}
                 state={!item ? ElementStates.Default : item.state}
               />
               {arr.length - 1 !== index ?
