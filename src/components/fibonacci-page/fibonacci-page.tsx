@@ -42,7 +42,7 @@ export const FibonacciPage: React.FC = () => {
       <div className={`${Styles.main}`}>
         <form className={`${Styles.form}`} onSubmit={onSubmit}>
           <Input onChange={onChange} maxLength={inputLength} max={19} type='number' />
-          <Button text="Развернуть" type='submit' isLoader={isLoader} disabled={!input} />
+          <Button text="Развернуть" type='submit' isLoader={isLoader} disabled={!input || (Number(input) > 19)} />
         </form>
         <span className={`${Styles.text}`}>Максимальное число — 19</span>
       </div>
