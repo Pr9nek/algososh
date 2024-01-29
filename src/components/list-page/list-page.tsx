@@ -219,12 +219,14 @@ export const ListPage: React.FC = () => {
             text="Удалить из head"
             extraClass={`${styles.button}`}
             onClick={delHead}
+            disabled={(list.getSize() === 0)}
           />
           <Button
             isLoader={delFromTailLoad}
             text="Удалить из tail"
             extraClass={`${styles.button}`}
             onClick={delTail}
+            disabled={(list.getSize() === 0)}
           />
         </div>
         <span className={`${styles.text}`}>Максимум — 4 символа</span>
@@ -235,14 +237,14 @@ export const ListPage: React.FC = () => {
             text="Добавить по индексу"
             extraClass={`${styles.buttonLow}`}
             onClick={addWithIndex}
-            disabled={!inputIndex || !inputValue || (+inputIndex > list.getSize()) || (+inputIndex === list.getSize())}
+            disabled={!inputIndex || !inputValue || (+inputIndex > list.getSize()) || (+inputIndex === list.getSize()) || (list.getSize() === 0)}
           />
           <Button
             isLoader={delWithIndexLoad}
             text="Удалить по индексу"
             extraClass={`${styles.buttonLow}`}
             onClick={delWithIndex}
-            disabled={!inputIndex || (+inputIndex > list.getSize()) || (+inputIndex === list.getSize())}
+            disabled={!inputIndex || (+inputIndex > list.getSize()) || (+inputIndex === list.getSize()) || list.getSize() !== 0}
           />
         </div>
         <div className={`${styles.circles}`}>
