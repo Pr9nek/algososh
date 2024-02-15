@@ -1,29 +1,30 @@
 import { Button } from "./button";
 import { render, fireEvent, screen } from '@testing-library/react';
-// import renderer from 'react-test-renderer';
+const testRenderer = require('react-test-renderer');
 
 describe('Button component', () => {
-    it('рендер кнопки с текстом', () => {
-        render(<Button text='Кнопка' />);
-        expect(screen.getByRole('button')).toMatchSnapshot();
+    it('rendering a button with text', () => {
+        const tree = testRenderer.create(<Button text='Кнопка'/>).toJSON();
+        expect(tree).toMatchSnapshot();
     });
 
-    it('рендер кнопки без текста', () => {
+    it('rendering a button without text', () => {
+        const tree = testRenderer.create(<Button />).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+
+    it('rendering a disabled button', () => {
+        const tree = testRenderer.create(<Button disabled={true} />).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+
+    it('rendering a button with a loading indication', () => {
         render(<Button />);
-        expect(screen.getByRole('button')).toMatchSnapshot();
+        const tree = testRenderer.create(<Button isLoader={true} />).toJSON();
+        expect(tree).toMatchSnapshot();
     });
 
-    it('рендер заблокированной кнопки', () => {
-        render(<Button disabled={true} />);
-        expect(screen.getByRole('button')).toMatchSnapshot();
-    });
-
-    it('рендер кнопки с индикацией загрузки', () => {
-        render(<Button isLoader={true} />);
-        expect(screen.getByRole('button')).toMatchSnapshot();
-    });
-
-    it('корректность вызова колбека при клике на кнопку', () => {
+    it('the correctness of calling the callback when clicking on the button', () => {
         const callBackMockFn = jest.fn();
         render(<Button onClick={callBackMockFn} />)
         fireEvent.click(screen.getByRole('button'))
