@@ -7,7 +7,6 @@ import { Circle } from "../ui/circle/circle";
 import Styles from "./string.module.css";
 import { makePerform } from "./utils/utils";
 import { ElementStates } from "../../types/element-states";
-import { DELAY_IN_MS } from "../../constants/delays";
 
 export interface IPerformance {
   letter: string;
