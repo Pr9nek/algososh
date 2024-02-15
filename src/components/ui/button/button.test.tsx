@@ -23,20 +23,6 @@ describe('Button component', () => {
         expect(screen.getByRole('button')).toMatchSnapshot();
     });
 
-    // it('рендер заблокированной кнопки', () => {
-    //     const tree = renderer
-    //         .create(<Button disabled />)
-    //         .toJSON();
-    //     expect(tree).toMatchSnapshot();
-    // });
-
-    // it('рендер кнопки с индикацией загрузки', () => {
-    //     const tree = renderer
-    //         .create(<Button isLoader />)
-    //         .toJSON();
-    //     expect(tree).toMatchSnapshot();
-    // });
-
     it('корректность вызова колбека при клике на кнопку', () => {
         const callBackMockFn = jest.fn();
         render(<Button onClick={callBackMockFn} />)
