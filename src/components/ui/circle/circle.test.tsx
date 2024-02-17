@@ -50,4 +50,18 @@ describe("Circle component snapshot tests", () => {
         expect(tree).toMatchSnapshot();
     });
 
+    it('renders with react-element in head', () => {
+        const tree = testRenderer
+            .create(<Circle head={<Circle />}/>)
+            .toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+
+    it('renders with react-element in tail', () => {
+        const tree = testRenderer
+            .create(<Circle tail={<Circle />}/>)
+            .toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+
 })
