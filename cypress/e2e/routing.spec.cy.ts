@@ -1,8 +1,5 @@
-import { testUrl } from "../../src/constants/constants";
-// import { linkToString } from "../../src/constants/constants";
-
 describe("app works correctly with routes", function () {
-    before(function () {
+    beforeEach(function () {
         cy.visit('/');
     });
 
@@ -10,38 +7,39 @@ describe("app works correctly with routes", function () {
         cy.contains('МБОУ АЛГОСОШ');
     });
 
-    it("should open string-page", function () {
-        cy.visit('/recursion');
+
+    it("should open string-page by click", function () {
+        cy.get('a[href*="recursion"]').click();
         cy.contains('Строка');
         cy.contains('К оглавлению').click();
     });
 
     it("should open fibonacci-page", function () {
-        cy.visit('/fibonacci');
+        cy.get('a[href*="fibonacci"]').click();
         cy.contains('Последовательность Фибоначчи');
         cy.contains('К оглавлению').click();
     });
 
     it("should open sorting-page", function () {
-        cy.visit('/sorting');
+        cy.get('a[href*="sorting"]').click();
         cy.contains('Сортировка массива');
         cy.contains('К оглавлению').click();
     });
 
     it("should open stack-page", function () {
-        cy.visit('/stack');
+        cy.get('a[href*="stack"]').click();
         cy.contains('Стек');
         cy.contains('К оглавлению').click();
     });
 
     it("should open queue-page", function () {
-        cy.visit('/queue');
+        cy.get('a[href*="queue"]').click();
         cy.contains('Очередь');
         cy.contains('К оглавлению').click();
     });
 
     it("should open list-page", function () {
-        cy.visit('/list');
+        cy.get('a[href*="list"]').click();
         cy.contains('Связный список');
         cy.contains('К оглавлению').click();
     });
