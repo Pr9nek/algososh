@@ -1,7 +1,7 @@
-import { SHORT_DELAY_IN_MS, DELAY_IN_MS } from "../../src/constants/delays";
+import { SHORT_DELAY_IN_MS } from "../../src/constants/delays";
 import { circleSelector } from '../../src/constants/constants';
 
-describe("fibonacci page works correctly", function () {
+describe('fibonacci page works correctly', function () {
   beforeEach(function () {
     cy.visit('/fibonacci');
   });

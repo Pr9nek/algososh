@@ -1,7 +1,7 @@
 import { circleSelector } from '../../src/constants/constants';
 import {DELAY_IN_MS} from '../../src/constants/delays';
 
-describe("string-page works correctly", function () {
+describe('string-page works correctly', function () {
   beforeEach(function () {
     cy.visit('/recursion');
   });
