@@ -1,11 +1,62 @@
-import { testUrl } from "../../src/constants/constants";
+import { SHORT_DELAY_IN_MS, DELAY_IN_MS } from "../../src/constants/delays";
+import { circleSelector } from '../../src/constants/constants';
 
 describe("fibonacci page works correctly", function () {
-  before(function () {
-    cy.visit(`${testUrl}/fibonacci`);
+  beforeEach(function () {
+    cy.visit('/fibonacci');
   });
 
-  it('Example test', () => {
-    expect(true).to.eq(true)
-})
+  it('if the input is empty,the button is not available', () => {
+    cy.get('input').clear();
+    cy.get('button[type="submit"]').should('be.disabled');
+    cy.get('input').type('5');
+    cy.get('button[type="submit"]').should('be.enabled');
+  });
+
+  it('Should generate Fibonacci numbers correctly', () => {
+
+    const inputNumber = 5; // Задаем число для генерации ряда Фибоначчи
+
+    cy.get('input[type="number"]').type(inputNumber); // Вводим число в инпут
+    cy.get('button[type="submit"]').click(); // Нажимаем на кнопку
+
+    const fibonacciArray = [1, 1, 2, 3, 5, 8]; // Ожидаемый массив чисел Фибоначчи для введенного числа
+
+    cy.get(circleSelector).each(($el, index, $list) => { // Проверяем каждый круг
+      cy.get($el).contains(fibonacciArray[index]); // Проверяем соответствие значения круга ожидаемому значению из массива Фибоначчи
+    });
+
+    cy.wait(SHORT_DELAY_IN_MS);
+
+    cy.get(circleSelector).each(($el, index, $list) => { // Проверяем каждый круг
+      cy.get($el).contains(fibonacciArray[index]); // Проверяем соответствие значения круга ожидаемому значению из массива Фибоначчи
+    });
+
+    cy.wait(SHORT_DELAY_IN_MS);
+
+    cy.get(circleSelector).each(($el, index, $list) => { // Проверяем каждый круг
+      cy.get($el).contains(fibonacciArray[index]); // Проверяем соответствие значения круга ожидаемому значению из массива Фибоначчи
+    });
+
+    cy.wait(SHORT_DELAY_IN_MS);
+
+    cy.get(circleSelector).each(($el, index, $list) => { // Проверяем каждый круг
+      cy.get($el).contains(fibonacciArray[index]); // Проверяем соответствие значения круга ожидаемому значению из массива Фибоначчи
+    });
+
+    cy.wait(SHORT_DELAY_IN_MS);
+
+    cy.get(circleSelector).each(($el, index, $list) => { // Проверяем каждый круг
+      cy.get($el).contains(fibonacciArray[index]); // Проверяем соответствие значения круга ожидаемому значению из массива Фибоначчи
+    });
+
+    cy.wait(SHORT_DELAY_IN_MS);
+
+    cy.get(circleSelector).each(($el, index, $list) => { // Проверяем каждый круг
+      cy.get($el).contains(fibonacciArray[index]); // Проверяем соответствие значения круга ожидаемому значению из массива Фибоначчи
+    });
+
+    cy.wait(SHORT_DELAY_IN_MS);
+
+  });
 });

@@ -7,8 +7,10 @@ describe("string-page works correctly", function () {
   });
 
   it('if the input is empty,the button is not available', () => {
-    cy.get('input').clear()
-    cy.get('button[type="submit"]').should('be.disabled')
+    cy.get('input').clear();
+    cy.get('button[type="submit"]').should('be.disabled');
+    cy.get('input').type('Hello_World');
+    cy.get('button[type="submit"]').should('be.enabled');
   });
 
   it('should reverse the string c0rrectly', () => {
