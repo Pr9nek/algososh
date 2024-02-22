@@ -105,9 +105,9 @@ describe('stack page works correctly', function () {
 
     it('Values are removing from the stack correctly', () => {
 
-        cy.get('input').type('11');
+        cy.get('input').type('9');
         cy.get('button').contains('Добавить').click()
-        cy.get('input').type('22');
+        cy.get('input').type('67');
         cy.get('button').contains('Добавить').click()
 
         cy.get(circleSelector)
@@ -119,11 +119,11 @@ describe('stack page works correctly', function () {
         cy.get(circleSelector)
             .eq(0)
             .should("have.css", "border-color", elementStates.default)
-            .contains('1')
+            .contains('9')
         cy.get(circleSelector)
             .eq(1)
             .should("have.css", "border-color", elementStates.changing)
-            .contains('2')
+            .contains('67')
 
         cy.wait(SHORT_DELAY_IN_MS);
 
@@ -139,10 +139,22 @@ describe('stack page works correctly', function () {
         cy.get(circleSelector)
             .eq(0)
             .should("have.css", "border-color", elementStates.changing)
-            .contains('11')
+            .contains('9')
         cy.wait(SHORT_DELAY_IN_MS);
         cy.get(circleSelector)
             .should('have.length', 0)
     })
+
+    it('should remove all elements from the stack correctly', () => {
+        cy.get('input').type('9');
+        cy.get('button').contains('Добавить').click()
+        cy.get('input').type('67');
+        cy.get('button').contains('Добавить').click()
+        cy.wait(SHORT_DELAY_IN_MS);
+
+        cy.get('button').contains('Очистить').click();
+        cy.wait(SHORT_DELAY_IN_MS);
+        cy.get(circleSelector).should('have.length', 0)
+    });
 
 });
