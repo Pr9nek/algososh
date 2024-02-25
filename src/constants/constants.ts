@@ -6,3 +6,5 @@ export const elementStates = {
 }
 export const HeadSelector = '[data-testid=head]';
 export const IndexSelector = '[data-testid=index]';
+export const TailSelector = '[data-testid=tail]';
+export const LetterSelector = '[data-testid=letter]';

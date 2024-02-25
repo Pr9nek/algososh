@@ -24,7 +24,7 @@ export const Circle: React.FC<CircleProps> = ({
 }) => {
   return (
     <div 
-      data-testid='circle_container'
+      data-cy='circle'
       className={`${styles.content} ${extraClass}`}>
       <div
         data-testid='head'

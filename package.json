@@ -27,7 +27,9 @@
     "cypress": "./node_modules/.bin/cypress open"
   },
   "eslintConfig": {
+    "plugins": ["cypress"],
     "extends": [
+      "plugin:cypress/recommended",
       "react-app",
       "react-app/jest"
     ]
