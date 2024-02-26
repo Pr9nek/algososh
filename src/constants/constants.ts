@@ -8,3 +8,6 @@ export const HeadSelector = '[data-testid=head]';
 export const IndexSelector = '[data-testid=index]';
 export const TailSelector = '[data-testid=tail]';
 export const LetterSelector = '[data-testid=letter]';
+export const valueInput = '[data-testid=value]';
+export const indexInput = '[data-testid=indexInput]';
+export const circleSmallSelector = '[data-testid=small]';

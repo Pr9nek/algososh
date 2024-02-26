@@ -54,10 +54,14 @@
     position: absolute;
 	top: -64px;
 	left: 12px;
-}
+} 
 
 .circles__bottom {
     position: absolute;
 	top: 130px;
 	left: 12px;
 }
+
+/* .div {
+    border-color: white;
+} */
