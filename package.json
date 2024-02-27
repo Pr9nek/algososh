@@ -17,6 +17,7 @@
     "react-router-dom": "^5.2.1",
     "react-scripts": "5.0.0",
     "typescript": "^4.5.5",
+    "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -27,7 +28,9 @@
     "cypress:open": "./node_modules/.bin/cypress open"
   },
   "eslintConfig": {
-    "plugins": ["cypress"],
+    "plugins": [
+      "cypress"
+    ],
     "extends": [
       "plugin:cypress/recommended",
       "react-app",

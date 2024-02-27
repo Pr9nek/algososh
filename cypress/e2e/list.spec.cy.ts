@@ -1,4 +1,4 @@
-import { circleSelector, elementStates, HeadSelector, IndexSelector, TailSelector, LetterSelector, indexInput, valueInput, circleSmallSelector } from '../../src/constants/constants';
+import { circleSelector, testCircleSelector, elementStates, HeadSelector, IndexSelector, TailSelector, LetterSelector, indexInput, valueInput, circleSmallSelector } from '../../src/constants/constants';
 import { SHORT_DELAY_IN_MS, DELAY_IN_MS } from "../../src/constants/delays";
 
 describe('queue page works correctly', function () {
@@ -37,7 +37,7 @@ describe('queue page works correctly', function () {
         cy.get(circleSelector).each(($el, index, $list) => {
             cy.get($el).should('have.css', 'border-color', elementStates.default);
         });
-        cy.get('[data-cy="circle"]').as('circle').each(($el, index, $list) => {
+        cy.get(testCircleSelector).as('circle').each(($el, index, $list) => {
             if (index === 0) {
                 cy.wrap($el).children(HeadSelector).contains('head');
             }
@@ -67,7 +67,7 @@ describe('queue page works correctly', function () {
             cy.get($el).should("have.css", "border-color", elementStates.default);
         })
 
-        cy.get('[data-cy="circle"]').as('circle').each(($el, index, $list) => {
+        cy.get(testCircleSelector).as('circle').each(($el, index, $list) => {
             if (index === 0) {
                 cy.wrap($el).children(HeadSelector).contains('head');
             }
@@ -93,7 +93,7 @@ describe('queue page works correctly', function () {
         cy.get(circleSmallSelector).should('not.exist')
         cy.get(circleSelector).should('have.length', '3');
 
-        cy.get('[data-cy="circle"]').as('circle').each(($el, index, $list) => {
+        cy.get(testCircleSelector).as('circle').each(($el, index, $list) => {
             if (index === 0) {
                 cy.wrap($el).children(HeadSelector).contains('head');
             }
@@ -122,7 +122,7 @@ describe('queue page works correctly', function () {
             cy.get($el).should("have.css", "border-color", elementStates.default);
         })
 
-        cy.get('[data-cy="circle"]').as('circle').each(($el, index, $list) => {
+        cy.get(testCircleSelector).as('circle').each(($el, index, $list) => {
             if (index === 0) {
                 cy.wrap($el).children(HeadSelector).contains('head');
             }
@@ -146,7 +146,7 @@ describe('queue page works correctly', function () {
         cy.get(circleSmallSelector).should('not.exist')
         cy.get(circleSelector).should('have.length', '3');
 
-        cy.get('[data-cy="circle"]').as('circle').each(($el, index, $list) => {
+        cy.get(testCircleSelector).as('circle').each(($el, index, $list) => {
             if (index === 0) {
                 cy.wrap($el).children(HeadSelector).contains('head');
             }
@@ -176,7 +176,7 @@ describe('queue page works correctly', function () {
         cy.get(circleSmallSelector).should('not.exist');
 
         cy.get(circleSelector).should('have.length', '3');
-        cy.get('[data-cy="circle"]').as('circle').each(($el, index, $list) => {
+        cy.get(testCircleSelector).as('circle').each(($el, index, $list) => {
             if (index === 0) {
                 cy.wrap($el).children(HeadSelector).contains('head');
             }
@@ -206,7 +206,7 @@ describe('queue page works correctly', function () {
         cy.get(circleSmallSelector).eq(0).should("have.css", "border-color", elementStates.changing)
             .contains('100');
 
-        cy.get('[data-cy="circle"]').as('circle').each(($el, index, $list) => {
+        cy.get(testCircleSelector).as('circle').each(($el, index, $list) => {
             if (index === 0) {
                 cy.wrap($el).children(HeadSelector).contains('head');
             }
@@ -235,7 +235,7 @@ describe('queue page works correctly', function () {
         cy.get(circleSelector).each(($el, index, $list) => {
             cy.get($el).should('have.css', 'border-color', elementStates.default);
         });
-        cy.get('[data-cy="circle"]').as('circle').each(($el, index, $list) => {
+        cy.get(testCircleSelector).as('circle').each(($el, index, $list) => {
             if (index === 0) {
                 cy.wrap($el).children(HeadSelector).contains('head');
             }

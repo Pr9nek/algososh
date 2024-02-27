@@ -1,5 +1,5 @@
-import { circleSelector, elementStates, HeadSelector, IndexSelector, TailSelector, LetterSelector } from '../../src/constants/constants';
-import { SHORT_DELAY_IN_MS, DELAY_IN_MS } from "../../src/constants/delays";
+import { circleSelector, elementStates, testCircleSelector, HeadSelector, IndexSelector, TailSelector, LetterSelector } from '../../src/constants/constants';
+import { SHORT_DELAY_IN_MS } from "../../src/constants/delays";
 
 describe('queue page works correctly', function () {
     beforeEach(function () {
@@ -37,7 +37,7 @@ describe('queue page works correctly', function () {
             cy.get($el).children(LetterSelector).contains('fir');
         });
 
-        cy.get('[data-cy="circle"]').as('circle').each(($el, index) => {
+        cy.get(testCircleSelector).as('circle').each(($el, index) => {
             if (index === 0) {
                 cy.wrap($el).children(HeadSelector).contains('head');
                 cy.wrap($el).children(TailSelector).contains('tail');
@@ -65,7 +65,7 @@ describe('queue page works correctly', function () {
             cy.get($el).children(LetterSelector).contains('sec');
         });
 
-        cy.get('[data-cy="circle"]').as('circle').each(($el, index) => {
+        cy.get(testCircleSelector).as('circle').each(($el, index) => {
             if (index === 0) {
                 cy.wrap($el).children(HeadSelector).contains('head');
             }
@@ -100,7 +100,7 @@ describe('queue page works correctly', function () {
             cy.get($el).children(LetterSelector).contains('thir');
         });
 
-        cy.get('[data-cy="circle"]').as('circle').each(($el, index) => {
+        cy.get(testCircleSelector).as('circle').each(($el, index) => {
             if (index === 0) {
                 cy.wrap($el).children(HeadSelector).contains('head');
             }
@@ -142,7 +142,7 @@ describe('queue page works correctly', function () {
             expect($el).to.contain(index);
         });
 
-        cy.get('[data-cy="circle"]').as('circle').each(($el, index) => {
+        cy.get(testCircleSelector).as('circle').each(($el, index) => {
             if (index === 1) {
                 cy.wrap($el).children(HeadSelector).contains('head');
             }
@@ -164,7 +164,7 @@ describe('queue page works correctly', function () {
             expect($el).to.contain(index);
         });
 
-        cy.get('[data-cy="circle"]').as('circle').each(($el, index) => {
+        cy.get(testCircleSelector).as('circle').each(($el, index) => {
             if (index === 2) {
                 cy.wrap($el).children(HeadSelector).contains('head');
             }
@@ -185,7 +185,7 @@ describe('queue page works correctly', function () {
             expect($el).to.contain(index);
         });
 
-        cy.get('[data-cy="circle"]').as('circle').each(($el, index) => {
+        cy.get(testCircleSelector).as('circle').each(($el, index) => {
             if (index === 2) {
                 cy.wrap($el).children(HeadSelector).should('be.empty');;
             }
@@ -210,7 +210,7 @@ describe('queue page works correctly', function () {
         cy.wait(SHORT_DELAY_IN_MS);
 
         cy.contains(clearButton).click()
-        cy.get('[data-cy="circle"]').as('circle').each(($el, index) => {
+        cy.get(testCircleSelector).as('circle').each(($el, index) => {
                 cy.wrap($el).children(LetterSelector).should('have.length', 0);
         });
     })

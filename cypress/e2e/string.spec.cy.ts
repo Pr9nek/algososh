@@ -1,4 +1,4 @@
-import { circleSelector } from '../../src/constants/constants';
+import { circleSelector, submitButtonSelector } from '../../src/constants/constants';
 import {DELAY_IN_MS} from '../../src/constants/delays';
 
 describe('string-page works correctly', function () {
@@ -8,9 +8,9 @@ describe('string-page works correctly', function () {
 
   it('if the input is empty,the button is not available', () => {
     cy.get('input').clear();
-    cy.get('button[type="submit"]').should('be.disabled');
+    cy.get(submitButtonSelector).should('be.disabled');
     cy.get('input').type('Hello_World');
-    cy.get('button[type="submit"]').should('be.enabled');
+    cy.get(submitButtonSelector).should('be.enabled');
   });
 
   it('should reverse the string c0rrectly', () => {
@@ -42,7 +42,7 @@ describe('string-page works correctly', function () {
 
     cy.get('input').type(actualString);
     cy.get('button').should('not.be.disabled');
-    cy.get('button[type="submit"]').click();
+    cy.get(submitButtonSelector).click();
 
 
     cy.get(circleSelector).each(($el, index, $list) => {

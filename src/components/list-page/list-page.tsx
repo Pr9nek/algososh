@@ -9,7 +9,8 @@ import { ElementStates } from "../../types/element-states";
 import { Circle } from "../ui/circle/circle";
 import { LinkedList } from "./class/list";
 import { ArrowIcon } from "../ui/icons/arrow-icon";
-import { SHORT_DELAY_IN_MS, DELAY_IN_MS } from "../../constants/delays";
+import { SHORT_DELAY_IN_MS } from "../../constants/delays";
+import {v4 as uuidv4} from "uuid";
 
 const list = new LinkedList(generateRandomArray(4, 4));
 
@@ -250,7 +251,7 @@ export const ListPage: React.FC = () => {
         </div>
         <div className={`${styles.circles}`}>
           {array.map((item, index, arr) => (
-            <div className={`${styles.circles__item}`}>
+            <div key={uuidv4()} className={`${styles.circles__item}`}>
               <Circle
                 key={index}
                 index={index}

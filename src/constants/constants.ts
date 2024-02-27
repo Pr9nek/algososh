@@ -11,3 +11,5 @@ export const LetterSelector = '[data-testid=letter]';
 export const valueInput = '[data-testid=value]';
 export const indexInput = '[data-testid=indexInput]';
 export const circleSmallSelector = '[data-testid=small]';
+export const testCircleSelector = '[data-cy="circle"]';
+export const submitButtonSelector = 'button[type="submit"]';
