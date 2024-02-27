@@ -3,7 +3,7 @@
 exports[`Circle component snapshot tests renders Circle in the changing state 1`] = `
 <div
   className="content "
-  data-testid="circle_container"
+  data-cy="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
@@ -11,6 +11,7 @@ exports[`Circle component snapshot tests renders Circle in the changing state 1`
   />
   <div
     className="circle   changing"
+    data-testid="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -19,9 +20,11 @@ exports[`Circle component snapshot tests renders Circle in the changing state 1`
   </div>
   <p
     className="text text_type_input text_color_input mt-4 absolute index"
+    data-testid="index"
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-testid="tail"
   />
 </div>
 `;
@@ -29,7 +32,7 @@ exports[`Circle component snapshot tests renders Circle in the changing state 1`
 exports[`Circle component snapshot tests renders Circle in the default state 1`] = `
 <div
   className="content "
-  data-testid="circle_container"
+  data-cy="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
@@ -37,6 +40,7 @@ exports[`Circle component snapshot tests renders Circle in the default state 1`]
   />
   <div
     className="circle   default"
+    data-testid="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -45,9 +49,11 @@ exports[`Circle component snapshot tests renders Circle in the default state 1`]
   </div>
   <p
     className="text text_type_input text_color_input mt-4 absolute index"
+    data-testid="index"
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-testid="tail"
   />
 </div>
 `;
@@ -55,7 +61,7 @@ exports[`Circle component snapshot tests renders Circle in the default state 1`]
 exports[`Circle component snapshot tests renders Circle in the modified state 1`] = `
 <div
   className="content "
-  data-testid="circle_container"
+  data-cy="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
@@ -63,6 +69,7 @@ exports[`Circle component snapshot tests renders Circle in the modified state 1`
   />
   <div
     className="circle   modified"
+    data-testid="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -71,9 +78,11 @@ exports[`Circle component snapshot tests renders Circle in the modified state 1`
   </div>
   <p
     className="text text_type_input text_color_input mt-4 absolute index"
+    data-testid="index"
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-testid="tail"
   />
 </div>
 `;
@@ -81,7 +90,7 @@ exports[`Circle component snapshot tests renders Circle in the modified state 1`
 exports[`Circle component snapshot tests renders Circle with head 1`] = `
 <div
   className="content "
-  data-testid="circle_container"
+  data-cy="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head string"
@@ -91,6 +100,7 @@ exports[`Circle component snapshot tests renders Circle with head 1`] = `
   </div>
   <div
     className="circle   default"
+    data-testid="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -99,9 +109,11 @@ exports[`Circle component snapshot tests renders Circle with head 1`] = `
   </div>
   <p
     className="text text_type_input text_color_input mt-4 absolute index"
+    data-testid="index"
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-testid="tail"
   />
 </div>
 `;
@@ -109,7 +121,7 @@ exports[`Circle component snapshot tests renders Circle with head 1`] = `
 exports[`Circle component snapshot tests renders Circle with index 1`] = `
 <div
   className="content "
-  data-testid="circle_container"
+  data-cy="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
@@ -117,6 +129,7 @@ exports[`Circle component snapshot tests renders Circle with index 1`] = `
   />
   <div
     className="circle   default"
+    data-testid="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -125,11 +138,13 @@ exports[`Circle component snapshot tests renders Circle with index 1`] = `
   </div>
   <p
     className="text text_type_input text_color_input mt-4 absolute index"
+    data-testid="index"
   >
     0
   </p>
   <div
     className="text text_type_input text_color_input mt-4 absolute tail60 element"
+    data-testid="tail"
   />
 </div>
 `;
@@ -137,7 +152,7 @@ exports[`Circle component snapshot tests renders Circle with index 1`] = `
 exports[`Circle component snapshot tests renders Circle with props isSmall ===  true 1`] = `
 <div
   className="content "
-  data-testid="circle_container"
+  data-cy="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
@@ -145,6 +160,7 @@ exports[`Circle component snapshot tests renders Circle with props isSmall ===  
   />
   <div
     className="circle  small default"
+    data-testid="small"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -153,9 +169,11 @@ exports[`Circle component snapshot tests renders Circle with props isSmall ===  
   </div>
   <p
     className="text text_type_input text_color_input mt-4 absolute index"
+    data-testid="index"
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-testid="tail"
   />
 </div>
 `;
@@ -163,7 +181,7 @@ exports[`Circle component snapshot tests renders Circle with props isSmall ===  
 exports[`Circle component snapshot tests renders Circle with tail 1`] = `
 <div
   className="content "
-  data-testid="circle_container"
+  data-cy="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
@@ -171,6 +189,7 @@ exports[`Circle component snapshot tests renders Circle with tail 1`] = `
   />
   <div
     className="circle   default"
+    data-testid="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -179,9 +198,11 @@ exports[`Circle component snapshot tests renders Circle with tail 1`] = `
   </div>
   <p
     className="text text_type_input text_color_input mt-4 absolute index"
+    data-testid="index"
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 string"
+    data-testid="tail"
   >
     tail
   </div>
@@ -191,7 +212,7 @@ exports[`Circle component snapshot tests renders Circle with tail 1`] = `
 exports[`Circle component snapshot tests renders Circle with а letter 1`] = `
 <div
   className="content "
-  data-testid="circle_container"
+  data-cy="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
@@ -199,6 +220,7 @@ exports[`Circle component snapshot tests renders Circle with а letter 1`] = `
   />
   <div
     className="circle   default"
+    data-testid="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -209,9 +231,11 @@ exports[`Circle component snapshot tests renders Circle with а letter 1`] = `
   </div>
   <p
     className="text text_type_input text_color_input mt-4 absolute index"
+    data-testid="index"
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-testid="tail"
   />
 </div>
 `;
@@ -219,7 +243,7 @@ exports[`Circle component snapshot tests renders Circle with а letter 1`] = `
 exports[`Circle component snapshot tests renders Circle without a letter 1`] = `
 <div
   className="content "
-  data-testid="circle_container"
+  data-cy="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
@@ -227,6 +251,7 @@ exports[`Circle component snapshot tests renders Circle without a letter 1`] = `
   />
   <div
     className="circle   default"
+    data-testid="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -235,9 +260,11 @@ exports[`Circle component snapshot tests renders Circle without a letter 1`] = `
   </div>
   <p
     className="text text_type_input text_color_input mt-4 absolute index"
+    data-testid="index"
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-testid="tail"
   />
 </div>
 `;
@@ -245,7 +272,7 @@ exports[`Circle component snapshot tests renders Circle without a letter 1`] = `
 exports[`Circle component snapshot tests renders with react-element in head 1`] = `
 <div
   className="content "
-  data-testid="circle_container"
+  data-cy="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
@@ -253,7 +280,7 @@ exports[`Circle component snapshot tests renders with react-element in head 1`] 
   >
     <div
       className="content "
-      data-testid="circle_container"
+      data-cy="circle"
     >
       <div
         className="text text_type_input text_color_input mb-4 absolute head element"
@@ -261,6 +288,7 @@ exports[`Circle component snapshot tests renders with react-element in head 1`] 
       />
       <div
         className="circle   default"
+        data-testid="circle"
       >
         <p
           className="text text_type_circle text_color_input letter"
@@ -269,14 +297,17 @@ exports[`Circle component snapshot tests renders with react-element in head 1`] 
       </div>
       <p
         className="text text_type_input text_color_input mt-4 absolute index"
+        data-testid="index"
       />
       <div
         className="text text_type_input text_color_input mt-4 absolute tail30 element"
+        data-testid="tail"
       />
     </div>
   </div>
   <div
     className="circle   default"
+    data-testid="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -285,9 +316,11 @@ exports[`Circle component snapshot tests renders with react-element in head 1`] 
   </div>
   <p
     className="text text_type_input text_color_input mt-4 absolute index"
+    data-testid="index"
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-testid="tail"
   />
 </div>
 `;
@@ -295,7 +328,7 @@ exports[`Circle component snapshot tests renders with react-element in head 1`] 
 exports[`Circle component snapshot tests renders with react-element in tail 1`] = `
 <div
   className="content "
-  data-testid="circle_container"
+  data-cy="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
@@ -303,6 +336,7 @@ exports[`Circle component snapshot tests renders with react-element in tail 1`] 
   />
   <div
     className="circle   default"
+    data-testid="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -311,13 +345,15 @@ exports[`Circle component snapshot tests renders with react-element in tail 1`] 
   </div>
   <p
     className="text text_type_input text_color_input mt-4 absolute index"
+    data-testid="index"
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-testid="tail"
   >
     <div
       className="content "
-      data-testid="circle_container"
+      data-cy="circle"
     >
       <div
         className="text text_type_input text_color_input mb-4 absolute head element"
@@ -325,6 +361,7 @@ exports[`Circle component snapshot tests renders with react-element in tail 1`] 
       />
       <div
         className="circle   default"
+        data-testid="circle"
       >
         <p
           className="text text_type_circle text_color_input letter"
@@ -333,9 +370,11 @@ exports[`Circle component snapshot tests renders with react-element in tail 1`] 
       </div>
       <p
         className="text text_type_input text_color_input mt-4 absolute index"
+        data-testid="index"
       />
       <div
         className="text text_type_input text_color_input mt-4 absolute tail30 element"
+        data-testid="tail"
       />
     </div>
   </div>

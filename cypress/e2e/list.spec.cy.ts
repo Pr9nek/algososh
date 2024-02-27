@@ -12,6 +12,7 @@ describe('queue page works correctly', function () {
     const delByIndex = "Удалить по индексу";
     const removeFromHead = "Удалить из head";
     const removeFromTail = "Удалить из tail";
+    let letter: string;
 
 
     it('if the input is empty,the button is not available', () => {
@@ -66,29 +67,44 @@ describe('queue page works correctly', function () {
             cy.get($el).should("have.css", "border-color", elementStates.default);
         })
 
-    });
-
-    it('should remove the element from head correctly', () => {
-        cy.get(circleSelector).eq(0).within(($el) => {
-            cy.get($el).invoke('text').then((text) => {
-                const letter = text;
-            });
-
-        })
-
-        cy.contains(removeFromHead).click();
-
-        cy.get(circleSelector).eq(0).within(($el) => {
-            // cy.get($el).children(LetterSelector).should('not.contain.text', '');
-            cy.get($el).should("have.css", "border-color", elementStates.default);
-            
+        cy.get('[data-cy="circle"]').as('circle').each(($el, index, $list) => {
+            if (index === 0) {
+                cy.wrap($el).children(HeadSelector).contains('head');
+            }
+            if (index === $list.length - 1) {
+                cy.wrap($el).children(TailSelector).contains('tail');
+            }
         });
 
-        cy.get(circleSmallSelector).eq(0).should("have.css", "border-color", elementStates.default)
-        cy.get(circleSmallSelector).eq(0).contains('letter');
+        cy.get(IndexSelector).each(($el, index) => {
+            expect($el).to.contain(index);
+        });
+    });
 
+
+
+    it('should remove the element from head correctly', () => {
+        cy.contains(removeFromHead).click();
+        cy.get(circleSelector).eq(0).within(($el) => {
+            cy.get($el).should('not.contain.text');
+        })
+
+        cy.get(circleSmallSelector).should("have.css", "border-color", elementStates.changing);
+        cy.get(circleSmallSelector).should('not.exist')
         cy.get(circleSelector).should('have.length', '3');
 
+        cy.get('[data-cy="circle"]').as('circle').each(($el, index, $list) => {
+            if (index === 0) {
+                cy.wrap($el).children(HeadSelector).contains('head');
+            }
+            if (index === $list.length - 1) {
+                cy.wrap($el).children(TailSelector).contains('tail');
+            }
+        });
+
+        cy.get(IndexSelector).each(($el, index) => {
+            expect($el).to.contain(index);
+        });
     });
 
     it('should add the element to tail correctly', () => {
@@ -105,6 +121,73 @@ describe('queue page works correctly', function () {
             cy.get($el).children(LetterSelector).contains('100');
             cy.get($el).should("have.css", "border-color", elementStates.default);
         })
+
+        cy.get('[data-cy="circle"]').as('circle').each(($el, index, $list) => {
+            if (index === 0) {
+                cy.wrap($el).children(HeadSelector).contains('head');
+            }
+            if (index === $list.length - 1) {
+                cy.wrap($el).children(TailSelector).contains('tail');
+            }
+        });
+
+        cy.get(IndexSelector).each(($el, index) => {
+            expect($el).to.contain(index);
+        });
+    })
+
+    it('should remove the element from tail correctly', () => {
+        cy.contains(removeFromTail).click();
+        cy.get(circleSelector).eq(3).within(($el) => {
+            cy.get($el).should('not.contain.text');
+        })
+
+        cy.get(circleSmallSelector).should("have.css", "border-color", elementStates.changing);
+        cy.get(circleSmallSelector).should('not.exist')
+        cy.get(circleSelector).should('have.length', '3');
+
+        cy.get('[data-cy="circle"]').as('circle').each(($el, index, $list) => {
+            if (index === 0) {
+                cy.wrap($el).children(HeadSelector).contains('head');
+            }
+            if (index === $list.length - 1) {
+                cy.wrap($el).children(TailSelector).contains('tail');
+            }
+        });
+
+        cy.get(IndexSelector).each(($el, index) => {
+            expect($el).to.contain(index);
+        });
+    })
+
+    it('should remove the element by index correctly', () => {
+        cy.get(indexInput).type('2');
+        cy.contains(delByIndex).click();
+
+        cy.get(circleSelector).eq(0).should('have.css', 'border-color', elementStates.changing);
+        cy.get(circleSelector).eq(1).should('have.css', 'border-color', elementStates.changing);
+        cy.get(circleSelector).eq(2).should('have.css', 'border-color', elementStates.changing);
+
+        cy.get(circleSmallSelector).should("have.css", "border-color", elementStates.changing);
+        cy.get(circleSelector).each(($el) => {
+            cy.get($el).should('have.css', 'border-color', elementStates.default);
+        })
+
+        cy.get(circleSmallSelector).should('not.exist');
+
+        cy.get(circleSelector).should('have.length', '3');
+        cy.get('[data-cy="circle"]').as('circle').each(($el, index, $list) => {
+            if (index === 0) {
+                cy.wrap($el).children(HeadSelector).contains('head');
+            }
+            if (index === $list.length - 1) {
+                cy.wrap($el).children(TailSelector).contains('tail');
+            }
+        });
+
+        cy.get(IndexSelector).each(($el, index) => {
+            expect($el).to.contain(index);
+        });
     })
 
     it('should add the element by index correctly', () => {
@@ -151,6 +234,18 @@ describe('queue page works correctly', function () {
 
         cy.get(circleSelector).each(($el, index, $list) => {
             cy.get($el).should('have.css', 'border-color', elementStates.default);
+        });
+        cy.get('[data-cy="circle"]').as('circle').each(($el, index, $list) => {
+            if (index === 0) {
+                cy.wrap($el).children(HeadSelector).contains('head');
+            }
+            if (index === $list.length - 1) {
+                cy.wrap($el).children(TailSelector).contains('tail');
+            }
+        });
+
+        cy.get(IndexSelector).each(($el, index) => {
+            expect($el).to.contain(index);
         });
     });
 });
