@@ -17,16 +17,22 @@
     "react-router-dom": "^5.2.1",
     "react-scripts": "5.0.0",
     "typescript": "^4.5.5",
+    "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cypress:open": "./node_modules/.bin/cypress open"
   },
   "eslintConfig": {
+    "plugins": [
+      "cypress"
+    ],
     "extends": [
+      "plugin:cypress/recommended",
       "react-app",
       "react-app/jest"
     ]
@@ -44,6 +50,10 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.3.3"
+    "@types/react-router-dom": "^5.3.3",
+    "@types/react-test-renderer": "^17.0.2",
+    "cypress": "^13.6.4",
+    "eslint-plugin-cypress": "^2.15.1",
+    "react-test-renderer": "^17.0.2"
   }
 }

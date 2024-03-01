@@ -10,7 +10,11 @@ export const makeSelectSorting = async (
     direction: Direction.Descending | Direction.Ascending,
     setArray: React.Dispatch<React.SetStateAction<IRandomArray[]>>,
 ): Promise<IRandomArray[]> => {
+
     const len = arr.length;
+    if (!len) {return []} 
+    if (len === 1) {return arr}
+
     for (let i = 0; i < len - 1; i++) {
         let minIndex = i;
         arr[minIndex].state = ElementStates.Changing;

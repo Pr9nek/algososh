@@ -14,7 +14,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "types": [ "jest", "cypress"],
+    "types": ["uuid"],
   },
-  "include": ["src"]
+  "include": [
+    "src",
+    "cypress"
+  ]
 }

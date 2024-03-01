@@ -10,8 +10,9 @@ import { Circle } from "../ui/circle/circle";
 import { LinkedList } from "./class/list";
 import { ArrowIcon } from "../ui/icons/arrow-icon";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
+import {v4 as uuidv4} from "uuid";
 
-const list = new LinkedList(generateRandomArray(1, 6));
+const list = new LinkedList(generateRandomArray(4, 4));
 
 export const ListPage: React.FC = () => {
   const [addToHeadLoad, setAddToHeadLoad] = useState(false);
@@ -53,8 +54,10 @@ export const ListPage: React.FC = () => {
       type: 'top'
     };
     await performDelay(1000)
-    array[0]!.small = undefined;
+    //тут
     setAddToHeadLoad(false);
+    array[0]!.small = undefined; //это было
+
     list.toArray()[0]!.state = ElementStates.Modified;
     setArray(list.toArray());
     await performDelay(1000)
@@ -162,7 +165,7 @@ export const ListPage: React.FC = () => {
     setAddWithIndexLoad(false);
   }
 
-  const delWithIndex = async() => {
+  const delWithIndex = async () => {
     setDelWithIndexLoad(true);
     setInputValue('');
     setInputIndex('');
@@ -178,7 +181,7 @@ export const ListPage: React.FC = () => {
     }
 
     list.toArray().forEach((item) => item!.state = ElementStates.Default);
-    
+
     array[+inputIndex]!.stringvalue = " ";
     array[+inputIndex]!.state = ElementStates.Default;
     array[+inputIndex]!.small = {
@@ -187,7 +190,7 @@ export const ListPage: React.FC = () => {
     }
     setArray([...array]);
     await performDelay(SHORT_DELAY_IN_MS);
-    
+
     console.log(list.toArray());
     setArray(list.toArray());
     setDelWithIndexTail(false);
@@ -198,7 +201,7 @@ export const ListPage: React.FC = () => {
     <SolutionLayout title="Связный список">
       <div className={`${styles.main}`}>
         <div className={`${styles.options}`} >
-          <Input extraClass={`${styles.input}`} onChange={onChangeValue} maxLength={inputLength} value={inputValue} placeholder="Введите значение" />
+          <Input data-testid='value' extraClass={`${styles.input}`} onChange={onChangeValue} maxLength={inputLength} value={inputValue} placeholder="Введите значение" />
           <Button
             isLoader={addToHeadLoad}
             text="Добавить в head"
@@ -230,7 +233,7 @@ export const ListPage: React.FC = () => {
         </div>
         <span className={`${styles.text}`}>Максимум — 4 символа</span>
         <div className={`${styles.options}`}>
-          <Input extraClass={`${styles.input}`} type="number" onChange={onChangeIndex} maxLength={inputLength} value={inputIndex} placeholder="Введите индекс" />
+          <Input data-testid='indexInput' extraClass={`${styles.input}`} type="number" onChange={onChangeIndex} maxLength={inputLength} value={inputIndex} placeholder="Введите индекс" />
           <Button
             isLoader={addWithIndexLoad}
             text="Добавить по индексу"
@@ -243,24 +246,30 @@ export const ListPage: React.FC = () => {
             text="Удалить по индексу"
             extraClass={`${styles.buttonLow}`}
             onClick={delWithIndex}
-            disabled={!inputIndex || (+inputIndex > list.getSize()) || (+inputIndex === list.getSize()) || list.getSize() !== 0}
+            disabled={!inputIndex || (+inputIndex > list.getSize()) || (+inputIndex === list.getSize()) || list.getSize() === 0}
           />
         </div>
         <div className={`${styles.circles}`}>
           {array.map((item, index, arr) => (
-            <div className={`${styles.circles__item}`}>
+            <div key={uuidv4()} className={`${styles.circles__item}`}>
               <Circle
                 key={index}
                 index={index}
                 letter={!(item!.stringvalue) ? `${item?.value}` : item?.stringvalue}
-                head={index === 0 && !addToHeadLoad && !addWithIndexHead ? 'head' : ''}
-                tail={index === array.length - 1 && !delFromTailLoad  && !delWithIndexTail ? 'tail' : ''}
+                head={
+                  index === 0 && !addToHeadLoad && !addWithIndexHead ? 'head' :
+                    null
+                }
+
+                tail={index === array.length - 1 && !delFromTailLoad && !delWithIndexTail ? 'tail' : ''}
                 state={!item ? ElementStates.Default : item.state}
+
               />
               {arr.length - 1 !== index ?
                 (
                   <ArrowIcon />)
-                : null}
+                : null
+              }
 
               {item?.small && (
                 <Circle

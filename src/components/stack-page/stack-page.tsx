@@ -88,7 +88,7 @@ export const StackPage: React.FC = () => {
         <div className={`${styles.circles}`}>
           {stack.getArray().map((item, index, arr) =>
             <Circle key={index} index={index} letter={item.letter} state={item.state} head={index === stack.getSize() - 1 ? 'top' : ''} />
-          )};
+          )}
         </div>
       </div>
     </SolutionLayout>
