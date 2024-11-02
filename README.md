@@ -5,6 +5,8 @@
 Команда Яндекс Практикума подготовила [дизайн проекта.](https://www.figma.com/file/RIkypcTQN5d37g7RRTFid0/Algososh_external_link?node-id=0%3A1) 
 Заготовка проекта на React взята из [репозитория](https://github.com/yandex-praktikum/algososh). 
 
+[Ссылка на проект](https://pr9nek.github.io/algososh/#/)
+
 **STACK**
 
 JavaScript, CSS, JSX, React, TypeScript, Jest, Cypress.
